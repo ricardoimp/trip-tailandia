@@ -227,7 +227,11 @@ button.mini{border:0;cursor:pointer}
 @media(prefers-reduced-motion:reduce){.tr-mic.rec{animation:none}}
 .tr-f{flex:1;display:flex;gap:8px;min-width:0}
 .tr-f input{flex:1;min-width:0}
-.tr-st{font-size:13px;color:var(--soft)}
+.tr-st{font-size:14px;color:var(--soft);padding:4px 0}
+.tr-st.err{color:#fff;background:var(--red);border-radius:10px;padding:6px 10px}
+.tr-st.ok{color:var(--jade);font-weight:600}
+.tr-warn{font-size:13px;background:#fff1c2;color:#5a3a00;border-radius:10px;padding:6px 10px;margin-bottom:6px}
+.tr-warn[hidden]{display:none}
 .tr-res{background:var(--chip);border-radius:14px;padding:10px 12px;margin-bottom:8px;max-height:42vh;overflow:auto}
 .tr-res[hidden]{display:none}
 .tr-src{font-size:14px;color:var(--soft)}
@@ -408,6 +412,7 @@ label{font:500 14px Kanit;display:block;margin-bottom:6px}
     <button type="button" class="tr-mic" id="tr-mic" aria-label="Gravar"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
     <form id="tr-f" class="tr-f"><input id="tr-in" type="text" placeholder="Fale no microfone ou digite aqui" aria-label="Texto para traduzir"><button type="submit" class="btn pri">Traduzir</button></form>
   </div>
+  <div class="tr-warn" id="tr-warn" hidden>Dentro do app do Claude o microfone e a tradução ficam bloqueados. Abra pelo site <b>trip-tailandia.vercel.app</b> no navegador do celular.</div>
   <div class="tr-st" id="tr-st">Toque no microfone e fale em português.</div>
 </div>
 <nav class="tabs" aria-label="Seções">
@@ -944,31 +949,36 @@ renderFr();
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 let dir="us",lang="th",rec=null,lastOut="",lastLang="th-TH";
 const LC={th:{rec:"th-TH",tts:"th-TH",mm:"th"},en:{rec:"en-US",tts:"en-US",mm:"en"},pt:{rec:"pt-BR",tts:"pt-BR",mm:"pt-BR"}};
-const st=t=>{$("tr-st").textContent=t};
+const st=(t,k)=>{$("tr-st").textContent=t;$("tr-st").className="tr-st"+(k?" "+k:"")};
+try{if(window.self!==window.top)$("tr-warn").hidden=false}catch(e){$("tr-warn").hidden=false}
 const say=(t,l)=>{try{const u=new SpeechSynthesisUtterance(t);u.lang=l;u.rate=.9;const v=speechSynthesis.getVoices().find(v=>v.lang.replace("_","-").toLowerCase().startsWith(l.slice(0,2).toLowerCase()));if(v)u.voice=v;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){st("Este aparelho não conseguiu tocar o áudio. Mostre o texto na tela.")}};
 const hint=()=>st(dir==="us"?"Toque no microfone e fale em português.":"Toque no microfone e peça para a pessoa falar em "+(lang==="th"?"tailandês.":"inglês."));
-const translate=async txt=>{txt=txt.trim();if(!txt)return;
+const gtx=async(t,f,to)=>{const r=await fetch("https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl="+f+"&tl="+to+"&q="+encodeURIComponent(t));if(!r.ok)throw 0;const j=await r.json();const o=(j[0]||[]).map(x=>x[0]).join("");if(!o)throw 0;return o};
+const mym=async(t,f,to)=>{const r=await fetch("https://api.mymemory.translated.net/get?q="+encodeURIComponent(t)+"&langpair="+f+"|"+to);const j=await r.json();if(!j||+j.responseStatus!==200||!j.responseData||!j.responseData.translatedText)throw 0;return j.responseData.translatedText};
+const translate=async txt=>{txt=(txt||"").trim();
+ if(!txt){st("Não captei nenhuma fala. Toque no microfone e fale perto do celular, ou digite a frase.","err");return}
  const from=dir==="us"?"pt":lang,to=dir==="us"?lang:"pt";
- st("Traduzindo...");
- try{const r=await fetch("https://api.mymemory.translated.net/get?q="+encodeURIComponent(txt)+"&langpair="+LC[from].mm+"|"+LC[to].mm);
-  const j=await r.json();const out=(j&&j.responseData&&j.responseData.translatedText)||"";if(!out)throw 0;
-  lastOut=out;lastLang=LC[to].tts;$("tr-src").textContent=txt;$("tr-out").textContent=out;$("tr-out").lang=to;$("tr-res").hidden=false;
-  say(out,lastLang);hint()}
- catch(e){st("Não consegui traduzir. Confira a internet. No app do Claude o tradutor fica bloqueado: use pelo site trip-tailandia.vercel.app.")}};
-$("tr-f").addEventListener("submit",e=>{e.preventDefault();translate($("tr-in").value)});
+ st("Traduzindo...");$("tr-f").querySelector("button").disabled=true;
+ let out="";
+ try{out=await gtx(txt,from,to)}catch(e){try{out=await mym(txt,from==="pt"?"pt-BR":from,to==="pt"?"pt-BR":to)}catch(e2){}}
+ $("tr-f").querySelector("button").disabled=false;
+ if(!out){st("Não consegui traduzir: sem conexão com o serviço de tradução. Confira a internet"+($("tr-warn").hidden?".":" e abra pelo site da Vercel."),"err");return}
+ lastOut=out;lastLang=LC[to].tts;$("tr-src").textContent=txt;$("tr-out").textContent=out;$("tr-out").lang=to;$("tr-res").hidden=false;
+ say(out,lastLang);st("Pronto. Mostre a tela ou toque em Ouvir de novo.","ok")};
+$("tr-f").addEventListener("submit",e=>{e.preventDefault();if(rec){st("Finalizando a gravação...");rec.stop();return}translate($("tr-in").value)});
 $("tr-play").addEventListener("click",()=>{if(lastOut)say(lastOut,lastLang)});
 $("tr-close").addEventListener("click",()=>{$("tr-res").hidden=true});
 document.querySelector(".tr-mode").addEventListener("click",e=>{const b=e.target.closest("[data-dir]");if(!b)return;dir=b.dataset.dir;document.querySelectorAll(".tr-mode button").forEach(x=>x.setAttribute("aria-pressed",x===b));$("tr-in").placeholder=dir==="us"?"Fale no microfone ou digite aqui":"A pessoa fala no microfone ou digita aqui";hint()});
 document.querySelector(".tr-lang").addEventListener("click",e=>{const b=e.target.closest("[data-l]");if(!b)return;lang=b.dataset.l;document.querySelectorAll(".tr-lang button").forEach(x=>x.setAttribute("aria-pressed",x===b));hint()});
 $("tr-mic").addEventListener("click",()=>{
- if(!SR){st("Este navegador não grava voz. Digite a frase e toque em Traduzir (no iPhone, use o Safari ou o ditado do teclado).");$("tr-in").focus();return}
+ if(!SR){st("Este navegador não tem reconhecimento de voz. Toque no campo de texto, use o microfone do teclado para ditar e depois toque em Traduzir.","err");$("tr-in").focus();return}
  if(rec){rec.stop();return}
  try{rec=new SR();rec.lang=dir==="us"?"pt-BR":LC[lang].rec;rec.interimResults=true;rec.continuous=false;
   let fin="";rec.onresult=ev=>{let t="";for(const r of ev.results)t+=r[0].transcript;$("tr-in").value=t;if(ev.results[ev.results.length-1].isFinal)fin=t};
-  rec.onerror=ev=>{st(ev.error==="not-allowed"?"Permita o uso do microfone para este site nas configurações do navegador.":"Não consegui ouvir. Tente de novo ou digite.")};
-  rec.onend=()=>{$("tr-mic").classList.remove("rec");rec=null;const t=fin||$("tr-in").value;if(t)translate(t)};
-  rec.start();$("tr-mic").classList.add("rec");st("Ouvindo... toque de novo para parar.")}
- catch(e){rec=null;st("Não foi possível usar o microfone aqui. Digite a frase e toque em Traduzir.")}});
+  let errd=false;rec.onerror=ev=>{errd=true;st(ev.error==="not-allowed"||ev.error==="service-not-allowed"?"O microfone está bloqueado. Permita o microfone para este site nas configurações do navegador (no iPhone: Ajustes > Safari > Microfone).":ev.error==="no-speech"?"Não ouvi nada. Toque no microfone e fale logo em seguida.":"Erro no reconhecimento de voz ("+ev.error+"). Use o microfone do teclado para ditar e toque em Traduzir.","err")};
+  rec.onend=()=>{$("tr-mic").classList.remove("rec");rec=null;const t=fin||$("tr-in").value;if(t)translate(t);else if(!errd)st("Não captei nenhuma fala. Tente de novo ou use o microfone do teclado para ditar.","err")};
+  rec.start();$("tr-mic").classList.add("rec");$("tr-in").value="";st("Ouvindo... fale agora. Toque de novo no microfone para parar.","ok")}
+ catch(e){rec=null;st("Não foi possível usar o microfone aqui. Use o microfone do teclado para ditar e toque em Traduzir.","err")}});
 try{speechSynthesis.getVoices()}catch(e){}
 }
 /* conversor */
