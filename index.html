@@ -369,7 +369,7 @@ const DAYS=[
    tip:"O acesso ao interior pode depender da programação e das condições de visitação. Confirmar antes se há visitação pública na data.",map:"Rajadamnern Stadium Bangkok"}
  ]},
  {id:"d30",wd:"Qua",d:"30",title:"A definir",stops:[]},
- {id:"d31",wd:"Qui",d:"31",title:"Rumo a Chiang Mai e Ano Novo",theme:"Lanternas celestes na virada para 2027",stops:[
+ {id:"d31",wd:"Qui",d:"31",title:"Rumo a Chiang Mai e Ano Novo",theme:"Chiang Mai de 31/12 a 04/01 · lanternas celestes na virada para 2027",stops:[
   {id:"saidabkk",t:"08:45",k:"simple",name:"Check-out do Novotel e ida ao aeroporto Don Mueang",txt:"Atenção: o voo sai do Don Mueang (DMK), não do Suvarnabhumi onde chegamos. Chegar por volta das 9h30."},
   {id:"rota",t:"11:30",tn:"FD 3447",svg:"route",name:"Voo Bangkok → Chiang Mai",th:"กรุงเทพฯ → เชียงใหม่",what:"Voo direto da Thai AirAsia, classe econômica. Pouso em Chiang Mai às 12:40, com tempo de sobra para o check-in no hotel às 14h.",
    facts:[["Voo","Thai AirAsia FD 3447"],["Partida","11:30 · Don Mueang (DMK)"],["Chegada","12:40 · Chiang Mai (CNX)"],["Duração","1h10, direto"],["Referência da reserva","CIU2WX"],["Bagagem","2 de mão (5 kg cada) + 1 despachada (15 kg)"]],
@@ -384,8 +384,10 @@ const DAYS=[
  ],note:"A virada para 2027 em Chiang Mai, a cidade das lanternas."},
  {id:"d01",wd:"Sex",d:"1",m:"jan",title:"A definir",theme:"Chiang Mai",stops:[]},
  {id:"d02",wd:"Sáb",d:"2",m:"jan",title:"Chiang Mai",theme:"Check-out do Lanna Oriental",stops:[
-  {id:"checkout",t:"12:00",k:"simple",name:"Check-out do hotel",txt:"Saída do Lanna Oriental Hotel até as 12:00. Restante do dia a definir."}
- ]}
+  {id:"checkout",t:"12:00",k:"simple",name:"Check-out do Lanna Oriental",txt:"Saída do Lanna Oriental Hotel até as 12:00. Seguimos em Chiang Mai até 4 de janeiro: hospedagem das noites de 2 e 3 de janeiro a definir."}
+ ]},
+ {id:"d03",wd:"Dom",d:"3",m:"jan",title:"A definir",theme:"Chiang Mai",stops:[]},
+ {id:"d04",wd:"Seg",d:"4",m:"jan",title:"A definir",theme:"Último dia em Chiang Mai",stops:[]}
 ];
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 let checks=store.get("tl-checks",{});
@@ -459,7 +461,9 @@ const RES=[
  {d:"31",m:"dez",name:"Réveillon CAD 2027 · Lanternas celestes",info:"2 ingressos · reserva GYG996QG9ZL3 · Hualiying Travel",st:"ok",qr:["ingresso-1","ingresso-2"]},
  
  {d:"14",m:"jan",name:"Voos de volta · BKK → KUL → DOH → GRU",info:"MH 781 + MH 164 + 5261 · chegada em SP sex, 15 jan, 16:55",st:"ok",pdf:"voo-tailandia"},
- {d:"3",m:"jan",name:"Roteiro de 3 a 14 de janeiro",info:"Hospedagens e passeios a definir",st:"def"}
+ {d:"2",m:"jan",name:"Hospedagem em Chiang Mai, 2 a 4 jan",info:"Noites de 2 e 3 de janeiro · a definir",st:"def"},
+ {d:"4",m:"jan",name:"Saída de Chiang Mai",info:"Transporte e destino seguinte a definir",st:"def"},
+ {d:"5",m:"jan",name:"Roteiro de 5 a 14 de janeiro",info:"Hospedagens e passeios a definir",st:"def"}
 ];
 const ST={ok:["Reservado","s-ok"],to:["A reservar","s-to"],def:["A definir","s-def"]};
 const renderStatus=()=>{
