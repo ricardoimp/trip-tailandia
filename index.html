@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tailândia Ricardo e Milene</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kanit:wght@300;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday travel companion, warm and festive but tidy
+   IDEA a Thai temple guidebook crossed with a boarding pass: lacquer red, gold leaf, jade
+   PICTURE dusk skyline of Wat Arun prangs and Wat Pho chedis over the Chao Phraya, countdown on it
+   COLOUR temple red ground band, gold leaf accent, jade support; white body, lacquer night in dark
+   TYPE Kanit (Thai foundry display) + Sarabun (Thai text face)
+   LAYOUT hero scene band on top, app tabs, content column; on phone a bottom tab bar */
+:root{color-scheme:light dark;
+--bg:light-dark(#fffaf2,#170a0c);
+--card:light-dark(#ffffff,#241215);
+--ink:light-dark(#2a1215,#f7eadb);
+--soft:light-dark(#6e4b45,#cdb3a4);
+--line:light-dark(#efdcc4,#3d2226);
+--red:#a3161f;--red2:#7a0d16;
+--gold:light-dark(#b07d10,#e7b84a);
+--goldf:#e7b84a;
+--jade:light-dark(#0f7a5a,#4cc79c);
+--chip:light-dark(#fbefd9,#33191c)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Sarabun,system-ui,sans-serif;overflow-x:clip;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+h1,h2,h3,.disp{font-family:Kanit,Sarabun,sans-serif;letter-spacing:-.01em;line-height:1.08;margin:0}
+a{color:var(--jade)}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hero{position:relative;background:var(--red2);color:#fff6e6;overflow:hidden;padding-top:env(safe-area-inset-top,0px)}
+.hero svg{position:absolute;inset:0;width:100%;height:100%}
+.hero .in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start;padding-top:28px;padding-bottom:150px}
+.th{font-family:Kanit;font-weight:300;color:var(--goldf);font-size:18px}
+.hero h1{font-size:clamp(34px,6vw,52px);font-weight:700;margin-top:4px;text-wrap:balance}
+.hero p{margin:8px 0 0;color:#f4d9c2}
+.couple{font:400 clamp(40px,7vw,60px)/1.1 "Great Vibes",cursive;color:var(--goldf);margin-top:10px;text-shadow:0 2px 12px rgba(23,6,8,.5)}
+.couple span{color:#fff6e6;font-size:.8em}
+.trip{font:300 clamp(17px,2.4vw,21px)/1.3 Kanit,sans-serif;color:#fff6e6;letter-spacing:.02em;margin-top:2px}
+.trip b{font-weight:700;color:var(--goldf);letter-spacing:.12em;padding:0 2px}
+.count{background:rgba(23,6,8,.55);border:1px solid rgba(231,184,74,.55);border-radius:18px;padding:12px 18px;text-align:center;backdrop-filter:blur(4px)}
+.count b{display:block;font:700 clamp(36px,6vw,48px)/1 Kanit;color:var(--goldf)}
+.count span{font-size:14px;color:#f4d9c2}
+.kanok{height:14px;background:var(--goldf) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Cpath d='M0 14 L7 2 L14 14 Z M14 14 L21 2 L28 14Z' fill='%237a0d16'/%3E%3Ccircle cx='7' cy='10' r='2' fill='%23e7b84a'/%3E%3Ccircle cx='21' cy='10' r='2' fill='%23e7b84a'/%3E%3C/svg%3E") repeat-x;background-size:28px 14px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -6px 18px rgba(60,10,15,.08)}
+nav.tabs a{flex:1;max-width:180px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;min-height:60px;text-decoration:none;color:var(--soft);font:500 13px Kanit}
+nav.tabs a svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.tabs a[aria-current]{color:var(--red)}
+:root[data-theme=dark] nav.tabs a[aria-current]{color:var(--goldf)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) nav.tabs a[aria-current]{color:var(--goldf)}}
+nav.tabs a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.back{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 16px 0 10px;margin-bottom:14px;border-radius:999px;background:var(--chip);color:var(--ink);font:500 15px Kanit;text-decoration:none}
+.back svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4}
+.hero h1 a{color:inherit;text-decoration:none}
+section.view{display:none;padding-top:28px;padding-bottom:28px}
+section.view.on{display:block}
+h2{font-size:clamp(28px,4.4vw,38px);font-weight:600;margin-bottom:6px}
+.sub{color:var(--soft);margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.stat b{display:block;font:600 26px/1.1 Kanit;color:var(--red)}
+:root[data-theme=dark] .stat b{color:var(--goldf)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .stat b{color:var(--goldf)}}
+.stat span{color:var(--soft);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(9em,1fr));gap:12px;margin-bottom:22px}
+/* boarding pass */
+.pass{display:grid;grid-template-columns:minmax(0,1fr) 120px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:14px}
+.pass .main{padding:18px 20px}
+.pass .stub{background:var(--red);color:#fff6e6;padding:18px 14px;border-left:2px dashed var(--goldf);display:flex;flex-direction:column;justify-content:center;gap:6px;text-align:center}
+.stub b{font:700 22px Kanit;color:var(--goldf)}
+.route{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;margin:12px 0}
+.iata{font:700 clamp(32px,6vw,44px)/1 Kanit}
+.route small{display:block;color:var(--soft);font-size:14px}
+.path{height:2px;background:repeating-linear-gradient(90deg,var(--gold) 0 8px,transparent 8px 14px);position:relative}
+.path i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--card);padding:0 6px;color:var(--gold);font-style:normal;font-size:20px}
+.times{display:grid;grid-template-columns:repeat(auto-fit,minmax(8em,1fr));gap:10px;font-size:15px}
+.times b{display:block;font:600 20px Kanit;white-space:nowrap}
+.times span{color:var(--soft);font-size:13px}
+.pnr{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin-bottom:14px}
+.pnr>div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 12px;background:var(--red);color:#fff6e6;border-radius:18px;padding:14px 16px;border:2px solid var(--goldf)}
+.pnr span{grid-column:1;font-size:13px;color:#f4d9c2}
+.pnr b{grid-column:1;font:700 clamp(24px,5vw,30px)/1.1 Kanit;color:var(--goldf);letter-spacing:.04em;white-space:nowrap}
+.pnr .btn{grid-column:2;grid-row:1/3;background:transparent;color:#fff6e6;border-color:rgba(255,246,230,.5)}
+.lay{display:flex;gap:12px;align-items:center;margin:0 0 14px;padding:12px 16px;border-radius:14px;background:var(--chip);color:var(--ink)}
+.lay b{font-family:Kanit;font-weight:600}
+/* days */
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:18px;scroll-snap-type:x mandatory}
+.days button{flex:none;scroll-snap-align:start;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:8px 16px;min-height:56px;font:500 14px Kanit;cursor:pointer;text-align:left}
+.days button b{display:block;font-size:20px;font-weight:600}
+.days button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff6e6}
+.dayhead{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.prog{font:500 14px Kanit;color:var(--jade);white-space:nowrap}
+.tl{list-style:none;margin:16px 0 0;padding:0}
+.tl>li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;position:relative;padding-bottom:18px}
+.tl>li::before{content:"";position:absolute;left:83px;top:30px;bottom:0;width:2px;background:var(--line)}
+.tl>li:last-child::before{display:none}
+.hr{font:600 22px/1 Kanit;text-align:right;padding-top:8px;white-space:nowrap}
+.hr small{display:block;font:400 12px Sarabun;color:var(--soft);margin-top:4px}
+.stop{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.stop.done{opacity:.72}
+.stop.simple{padding:14px 16px}
+.foto{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--chip)}
+.stop .top{display:flex;gap:12px;align-items:flex-start;padding:16px 16px 0}
+.stop h3{font-size:22px;font-weight:600;flex:1}
+.stop h3 small{display:block;font:400 14px Sarabun;color:var(--soft);margin-top:4px}
+.chk{flex:none;width:44px;height:44px;border-radius:50%;border:2px solid var(--gold);background:transparent;cursor:pointer;display:grid;place-items:center;color:transparent}
+.chk svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:3}
+.done .chk{background:var(--jade);border-color:var(--jade);color:#fff}
+.stop .body{padding:10px 16px 16px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5em,1fr));gap:8px;margin:12px 0}
+.facts div{background:var(--chip);border-radius:12px;padding:8px 12px}
+.facts span{display:block;font-size:13px;color:var(--soft)}
+.facts b{font-weight:600}
+.see{margin:6px 0 0;padding-left:20px}
+.ttab{margin:12px 0}
+.ttab table{width:100%;border-collapse:collapse;margin-top:6px;font-size:15px}
+.ttab td{padding:8px 4px;border-bottom:1px solid var(--line)}
+.ttab td:last-child{text-align:right;font:600 16px Kanit;white-space:nowrap}
+.ttab tr.hl td{color:var(--jade);font-weight:700}
+.tip{margin-top:12px;padding:10px 14px;border-left:4px solid var(--gold);background:color-mix(in srgb,var(--goldf) 14%,transparent);border-radius:0 12px 12px 0}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px Kanit;text-decoration:none;cursor:pointer}
+.btn.pri{background:var(--jade);border-color:var(--jade);color:#fff}
+.tag{display:inline-block;font:500 13px Kanit;padding:2px 10px;border-radius:999px;background:var(--chip);color:var(--gold);margin-bottom:8px}
+.pend{border:2px dashed var(--line);border-radius:18px;padding:22px;text-align:center;color:var(--soft)}
+textarea,input{font:16px Sarabun;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%}
+textarea{min-height:96px;resize:vertical}
+label{font:500 14px Kanit;display:block;margin-bottom:6px}
+.clocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(9em,1fr));gap:12px}
+.clocks b{display:block;font:600 34px/1.1 Kanit;font-variant-numeric:tabular-nums}
+.conv{display:grid;grid-template-columns:repeat(auto-fit,minmax(10em,1fr));gap:12px;align-items:end}
+.res{font:600 30px Kanit;color:var(--jade)}
+.note{font-size:13px;color:var(--soft);margin-top:10px}
+@media(min-width:900px){nav.tabs{top:auto}}
+@media(max-width:600px){.hero .in{grid-template-columns:1fr;padding-bottom:130px}.count{justify-self:start;display:flex;gap:10px;align-items:baseline}.pass{grid-template-columns:1fr}.pass .stub{border-left:0;border-top:2px dashed var(--goldf);flex-direction:row;justify-content:space-around}.tl>li{grid-template-columns:58px minmax(0,1fr);gap:10px}.tl>li::before{left:64px}.hr{font-size:18px}}
+@media(prefers-reduced-motion:no-preference){.sun{animation:glow 6s ease-in-out infinite alternate}@keyframes glow{to{opacity:.65}}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <svg id="scene" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+  <div class="wrap in">
+    <div>
+      <div class="th">สวัสดี ประเทศไทย</div>
+      <h1><a href="#inicio">Tailândia 2026/2027</a></h1>
+      <div class="couple">Ricardo <span>&amp;</span> Milene</div><div class="trip">Nossa primeira <b>TRIP</b> internacional</div>
+    </div>
+    <div class="count"><b id="cd">--</b><span id="cdl">dias para embarcar</span></div>
+  </div>
+</header>
+<div class="kanok"></div>
+
+<main class="wrap">
+  <section class="view" id="v-inicio">
+    <h2>Nossa viagem</h2>
+    <p class="sub">Tudo o que já está definido, num só lugar. Vamos completando juntos.</p>
+    <div class="stats">
+      <div class="card stat"><b>26 dez</b><span>Embarque em Guarulhos</span></div>
+      <div class="card stat"><b>23h37</b><span>Porta a porta até Bangkok</span></div>
+      <div class="card stat"><b>+10h</b><span>Bangkok à frente de SP</span></div>
+      <div class="card stat"><b>27 a 30</b><span>Dias em Bangkok</span></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <span class="tag">Próximo passo</span>
+        <h3 style="font-size:22px">Voo QR 5262 · GRU → DOH</h3>
+        <p class="sub" style="margin:6px 0 12px">Sábado, 26 dez 2026, 02:10. Chegar a Guarulhos por volta das 23:00 de sexta.</p>
+        <a class="btn pri" href="#voos">Ver voos</a>
+      </div>
+      <div class="card">
+        <span class="tag">Primeiro dia</span>
+        <h3 style="font-size:22px">Templos e Chinatown</h3>
+        <p class="sub" style="margin:6px 0 12px">Wat Pho, Wat Arun e jantar em Yaowarat no domingo, 27 dez.</p>
+        <a class="btn pri" href="#roteiro">Abrir roteiro</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-voos">
+    <a class="back" href="#inicio"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Voltar ao início</a>
+    <h2>Voos de ida</h2>
+    <p class="sub">Qatar Airways · horários sempre na hora local de cada cidade.</p>
+    <div class="pnr">
+      <div><span>Código da reserva</span><b id="pnr-code">QPVOUT</b><button class="btn" data-copy="pnr-code">Copiar</button></div>
+      <div><span>Nº da reserva</span><b id="pnr-no">589924364800</b><button class="btn" data-copy="pnr-no">Copiar</button></div>
+    </div>
+    <div id="flights"></div>
+  
+    <div style="margin-top:24px"><a class="btn pri" href="#inicio">← Voltar ao início</a></div>
+  </section>
+
+  <section class="view" id="v-roteiro">
+    <a class="back" href="#inicio"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Voltar ao início</a>
+    <h2>Roteiro</h2>
+    <p class="sub">Bangkok, 27 a 30 de dezembro. Toque no círculo para marcar o que já visitamos.</p>
+    <div class="days" id="days" role="group" aria-label="Dias"></div>
+    <div id="day"></div>
+  
+    <div style="margin-top:24px"><a class="btn pri" href="#inicio">← Voltar ao início</a></div>
+  </section>
+
+  <section class="view" id="v-info">
+    <a class="back" href="#inicio"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Voltar ao início</a>
+    <h2>Guia rápido</h2>
+    <p class="sub">Relógios, câmbio e regras que valem para toda a viagem.</p>
+    <div class="card" style="margin-bottom:14px">
+      <div class="clocks">
+        <div><span class="sub">São Paulo</span><b id="c-sp">--:--</b></div>
+        <div><span class="sub">Doha</span><b id="c-doh">--:--</b></div>
+        <div><span class="sub">Bangkok</span><b id="c-bkk">--:--</b></div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <h3 style="font-size:22px;margin-bottom:12px">Conversor baht → real</h3>
+      <div class="conv">
+        <div><label for="thb">Valor em THB</label><input id="thb" type="number" inputmode="decimal" value="300"></div>
+        <div><label for="rate">R$ por 1 THB</label><input id="rate" type="number" inputmode="decimal" step="0.001" value="0.165"></div>
+        <div class="res" id="brl">R$ 0,00</div>
+      </div>
+      <p class="note">Cotação de exemplo. Atualize com o valor do dia antes de usar.</p>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3 style="font-size:20px;margin-bottom:6px">Templos</h3>Ombros e joelhos cobertos. Tirar os sapatos antes de entrar nas salas de oração. Não apontar os pés para imagens de Buda.</div>
+      <div class="card"><h3 style="font-size:20px;margin-bottom:6px">Calor</h3>Visitas ao ar livre rendem mais cedo ou no fim da tarde. Água sempre à mão e protetor solar.</div>
+    </div>
+  
+    <div style="margin-top:24px"><a class="btn pri" href="#inicio">← Voltar ao início</a></div>
+  </section>
+</main>
+
+<nav class="tabs" aria-label="Seções">
+  <a href="#inicio" data-v="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Início</a>
+  <a href="#voos" data-v="voos"><svg viewBox="0 0 24 24"><path d="M2 14l20-6-3 4-8 3-3 5-1-4z"/></svg>Voos</a>
+  <a href="#roteiro" data-v="roteiro"><svg viewBox="0 0 24 24"><path d="M12 2l3 6H9z"/><path d="M8 8h8l1 5H7z"/><path d="M5 13h14v8H5z"/></svg>Roteiro</a>
+  <a href="#info" data-v="info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v.5M12 11v6"/></svg>Guia</a>
+</nav>
+
+<script>
+{
+const FLIGHTS=[
+ {no:"QR 5262",from:"GRU",fromN:"São Paulo · Guarulhos",to:"DOH",toN:"Doha · Hamad",dep:"02:10",depD:"Sáb, 26 dez",arr:"≈ 21:55",arrD:"Sáb, 26 dez",dur:"13h30"},
+ {no:"QR 828",from:"DOH",fromN:"Doha · Hamad",to:"BKK",toN:"Bangkok · Suvarnabhumi",dep:"01:30",depD:"Dom, 27 dez",arr:"11:47",arrD:"Dom, 27 dez",dur:"6h15"}
+];
+const DAYS=[
+ {id:"d27",wd:"Dom",d:"27",title:"Templos e Chinatown",theme:"Cultura, arquitetura e gastronomia",stops:[
+  {id:"arr",t:"11:47",k:"simple",name:"Chegada em Bangkok",txt:"Pouso no aeroporto Suvarnabhumi, imigração e bagagens."},
+  {id:"hotel",t:"13:00",k:"simple",name:"Hotel",txt:"Deixar as malas, descansar um pouco, tomar banho e sair para a cidade."},
+  {id:"watpho",t:"14:30",ph:"watpho1",name:"Wat Pho",th:"วัดโพธิ์",what:"Um dos templos budistas mais importantes de Bangkok, famoso pelo gigantesco Buda Reclinado, com aproximadamente 46 metros de comprimento.",
+   facts:[["Localização","2 Sanam Chai Road, Phra Nakhon"],["Horário","Diariamente, 8h às 19h30"],["Entrada","≈ 300 THB por adulto estrangeiro"],["Tempo de visita","1h30 a 2h"],["Melhor horário","8h às 10h, antes do calor e das excursões"]],
+   see:["O impressionante Buda Reclinado","Os templos e pagodes decorados","Os jardins e pátios tradicionais","A arquitetura religiosa tailandesa"],
+   tip:"Use roupas que cubram os ombros e os joelhos. É um local religioso e exige vestimenta respeitosa.",map:"Wat Pho Bangkok"},
+  {id:"watarun",t:"16:15",ph:"watarun1",name:"Wat Arun",th:"วัดอรุณ",what:"Conhecido como Templo do Amanhecer, é um dos cartões-postais mais famosos da Tailândia. Sua torre central é decorada com milhares de fragmentos de porcelana colorida.",
+   facts:[["Localização","158 Thanon Wang Doem, Bangkok Yai"],["Horário","Diariamente, 8h às 18h"],["Entrada","≈ 200 THB para estrangeiros"],["Tempo de visita","1h a 1h30"],["Melhor horário","Final da tarde, 15h30 às 17h30"]],
+   how:"Os dois templos ficam em margens opostas do rio Chao Phraya. Pegar a pequena balsa no píer Tha Tien, ao lado do Wat Pho. A travessia leva poucos minutos.",
+   tip:"Reserve um tempo para fotografar o templo visto do rio. É uma das paisagens mais bonitas de Bangkok.",map:"Wat Arun Bangkok"},
+  {id:"china",t:"18:30",ph:"china1",name:"Chinatown · Yaowarat",th:"เยาวราช",what:"Um dos bairros mais movimentados e tradicionais de Bangkok, conhecido pelas luzes de neon, restaurantes chineses, mercados e comidas de rua.",
+   facts:[["Localização","Yaowarat Road, Samphanthawong"],["Horário","O dia todo; a gastronomia ferve no fim da tarde"],["Entrada","Gratuita"],["Tempo de visita","2 a 3 horas"],["Melhor horário","18h às 21h"]],
+   see:["Portão tradicional de Chinatown","Ruas iluminadas por letreiros coloridos","Mercadinhos e lojas chinesas","Gastronomia tailandesa e chinesa","Barracas de sobremesas e frutas exóticas"],
+   tip:"Deixar Chinatown para o jantar. É quando o bairro ganha vida e fica especialmente bonito para fotografias.",map:"Yaowarat Road Bangkok"}
+ ],note:"Como chegamos perto do meio-dia, o Wat Pho fica para o início da tarde. O Wat Arun cai exatamente na melhor luz, e Chinatown fecha o dia no jantar."},
+ {id:"d28",wd:"Seg",d:"28",title:"Mercado Flutuante e Mercado do Trem",theme:"Experiência típica tailandesa",stops:[
+  {id:"saida",t:"06:00",k:"simple",name:"Saída do hotel",txt:"Dia que começa cedo. Os dois mercados ficam fora do centro de Bangkok (cerca de 1h30 de estrada) e podem ser combinados na mesma excursão."},
+  {id:"flutuante",t:"07:45",ph:"flutuante",name:"Damnoen Saduak Floating Market",th:"ตลาดน้ำดำเนินสะดวก",what:"Um dos mercados flutuantes mais famosos da Tailândia. É aquele cenário clássico das fotografias: barquinhos navegando pelos canais, vendedores oferecendo frutas, comidas típicas e produtos locais.",
+   facts:[["Localização","Damnoen Saduak District, província de Ratchaburi"],["Horário","Diariamente, aprox. 7h às 12h"],["Entrada","Gratuita"],["Passeio de barco","Cobrado à parte, varia conforme tipo e duração"],["Melhor horário","7h às 9h"],["Tempo de visita","1h30 a 2h"]],
+   see:["Passear de barco pelos canais","Conhecer as barracas flutuantes"],
+   tip:"Combine o preço do barco antes de embarcar e confirme a duração do passeio.",map:"Damnoen Saduak Floating Market"},
+  {id:"trem",t:"10:45",ph:"trem",name:"Maeklong Railway Market",th:"ตลาดร่มหุบ",what:"Um mercado tradicional instalado ao longo de uma linha ferroviária em funcionamento. Quando o trem se aproxima, os comerciantes recolhem suas coberturas e afastam as mercadorias para liberar a passagem. Depois, o mercado volta à sua organização normal.",
+   facts:[["Localização","Phet Samut Road, Mae Klong, Samut Songkhram"],["Horário do mercado","Aprox. 6h às 18h"],["Entrada","Gratuita"],["Tempo de visita","1h a 1h30"],["Nosso trem","Chegada das 11h10"]],
+   table:{title:"Chegada dos trens em 2026",rows:[["Primeira","08h30"],["Segunda","11h10"],["Terceira","14h30"],["Quarta","17h40"]]},
+   tip:"Chegar uns 20 minutos antes do trem e garantir um lugar seguro, colado às barracas, para filmar a passagem.",map:"Maeklong Railway Market"},
+  {id:"livre",t:"14:00",k:"simple",name:"Passeio livre",txt:"Volta para Bangkok e tarde livre para descansar, explorar ou fazer compras."},
+  {id:"mazu",t:"19:30",ph:"mazu",name:"Jantar no Mazu",th:"Mazu BKK",what:"Restaurante contemporâneo de omakase no estilo kappo, inspirado no conceito de \"submundo\". A experiência é imersiva: arquitetura, ambientação e iluminação contam a história desde a entrada. Menu degustação com frutos do mar premium, carnes importadas e ingredientes da estação.",
+   facts:[["Estilo","Kappo omakase, menu degustação"],["Reserva","Online pelo Chope"],["Site","mazubkk.com"]],
+   tip:"Reservar com antecedência, por ser menu degustação com lugares limitados. Confirmar endereço e horário na reserva.",map:"Mazu BKK Bangkok",links:[["Reservar no Chope","https://www.chope.co/bangkok-restaurants/restaurant/mazu-bkk"],["Site do Mazu","https://mazubkk.com/"]]}
+ ],note:"Horários pensados para pegar o mercado flutuante no melhor momento e assistir à passagem do trem das 11h10 em Maeklong."},
+ {id:"d29",wd:"Ter",d:"29",title:"Ancient City e Muay Thai",theme:"A Tailândia inteira num só lugar e o templo do Muay Thai",stops:[
+  {id:"ancient",t:"09:00",te:"14:00",ph:"ancient",name:"The Ancient City · Muang Boran",th:"เมืองโบราณ",what:"Um enorme museu a céu aberto que reproduz construções históricas e monumentos de diferentes regiões da Tailândia. É praticamente uma viagem pelo país inteiro em um só lugar.",
+   facts:[["Endereço","296/1 Sukhumvit Road, Bang Pu Mai, Samut Prakan 10280"],["Horário","Diariamente, 9h às 19h (bilheteria pode fechar às 18h)"],["Entrada","≈ 800 THB por adulto estrangeiro"],["Tempo de visita","Pelo menos 4 horas"],["Melhor horário","Chegar às 9h, com clima mais fresco"]],
+   see:["Templos e palácios com arquitetura tailandesa","Jardins, lagos e pontes","Construções históricas inspiradas em monumentos originais","Áreas cenográficas perfeitas para fotografias","Réplicas de construções tradicionais de diferentes regiões"],
+   tip:"Considere alugar um carrinho elétrico (golf cart), pois o complexo é enorme. Leve protetor solar, água e use roupas confortáveis. Confira o preço do ingresso antes, pois pode mudar.",map:"Ancient City Muang Boran Samut Prakan"},
+  {id:"desloc",t:"14:00",te:"16:00",k:"simple",name:"Deslocamento para Bangkok",txt:"Carro por aplicativo ou táxi até a região do Rajadamnern Stadium, de 45 min a 1h30 conforme o trânsito. Pausa para almoçar no trajeto ou perto do destino. Não deixar para mais tarde: o trânsito de Bangkok pode ser intenso."},
+  {id:"rajadamnern",t:"16:00",te:"17:30",ph:"rajadamnern",name:"Rajadamnern Stadium",th:"เวทีราชดำเนิน",what:"Um dos estádios históricos mais conhecidos da Tailândia, inaugurado em 1945. É um importante símbolo cultural do Muay Thai.",
+   facts:[["Endereço","8 Ratchadamnoen Nok Road, Wat Sommanat, Bangkok 10100"],["Inauguração","1945"],["Tempo de visita","1h30"]],
+   seeLabel:"O que observar",see:["Arquitetura histórica do estádio","Estrutura circular da arena","Elementos culturais relacionados ao Muay Thai","A apresentação visual e a história do esporte, quando disponíveis"],
+   tip:"O acesso ao interior pode depender da programação e das condições de visitação. Confirmar antes se há visitação pública na data.",map:"Rajadamnern Stadium Bangkok"}
+ ]},
+ {id:"d30",wd:"Qua",d:"30",title:"A definir",stops:[]}
+];
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let checks=store.get("tl-checks",{});
+let cur=store.get("tl-day","d27");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=id=>document.getElementById(id);
+
+/* scene */
+const scene=$("scene");
+const prang=(cx,by,w,h,col,edge)=>{let o="";const n=7,th=h*0.1;for(let i=0;i<n;i++){const ww=w*(1-i*0.12),y=by-th*(i+1);o+=`<rect x="${cx-ww/2}" y="${y}" width="${ww}" height="${th+1}" rx="3" fill="${col}"/><rect x="${cx-ww/2}" y="${y}" width="${ww*0.18}" height="${th+1}" fill="${edge}" opacity=".5"/>`}const top=by-th*n,tw=w*0.18;o+=`<path d="M${cx-tw} ${top} Q${cx} ${top-h*0.32} ${cx} ${top-h*0.32} Q${cx} ${top-h*0.32} ${cx+tw} ${top}Z" fill="${col}"/><line x1="${cx}" y1="${top-h*0.32}" x2="${cx}" y2="${top-h*0.42}" stroke="${edge}" stroke-width="2"/>`;return o};
+const chedi=(cx,by,w,h,col)=>`<rect x="${cx-w/2}" y="${by-h*0.18}" width="${w}" height="${h*0.18}" fill="${col}"/><path d="M${cx-w*0.42} ${by-h*0.18} Q${cx-w*0.42} ${by-h*0.55} ${cx} ${by-h*0.6} Q${cx+w*0.42} ${by-h*0.55} ${cx+w*0.42} ${by-h*0.18}Z" fill="${col}"/><path d="M${cx-w*0.1} ${by-h*0.58} L${cx} ${by-h} L${cx+w*0.1} ${by-h*0.58}Z" fill="${col}"/>`;
+const hall=(x,by,w,col,edge)=>`<rect x="${x+w*0.12}" y="${by-38}" width="${w*0.76}" height="38" fill="${col}"/><path d="M${x} ${by-36} L${x+w*0.5} ${by-86} L${x+w} ${by-36}Z" fill="${col}"/><path d="M${x+w*0.15} ${by-58} L${x+w*0.5} ${by-110} L${x+w*0.85} ${by-58}Z" fill="${edge}"/><path d="M${x+w*0.5} ${by-110} q6 -14 14 -16" stroke="${edge}" stroke-width="4" fill="none"/><path d="M${x} ${by-36} q-8 -10 -4 -22" stroke="${edge}" stroke-width="4" fill="none"/><path d="M${x+w} ${by-36} q8 -10 4 -22" stroke="${edge}" stroke-width="4" fill="none"/>`;
+let sv=`<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a0a12"/><stop offset=".55" stop-color="#a3161f"/><stop offset="1" stop-color="#e46a2c"/></linearGradient><linearGradient id="riv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a0d16"/><stop offset="1" stop-color="#2a0507"/></linearGradient><radialGradient id="sun"><stop offset="0" stop-color="#ffd77a"/><stop offset="1" stop-color="#ffd77a" stop-opacity="0"/></radialGradient></defs>
+<rect width="1200" height="420" fill="url(#sky)"/><circle class="sun" cx="820" cy="300" r="150" fill="url(#sun)"/><circle cx="820" cy="318" r="46" fill="#ffcf6a"/>`;
+sv+=`<g opacity=".55">${chedi(120,350,60,150,"#6b0a12")}${chedi(200,350,50,120,"#6b0a12")}${hall(250,350,170,"#6b0a12","#5a0810")}${chedi(1100,350,56,140,"#6b0a12")}</g>`;
+sv+=`<g>${prang(640,352,70,150,"#3a0509","#e7b84a")}${prang(1000,352,70,150,"#3a0509","#e7b84a")}${prang(820,352,150,300,"#2d0407","#e7b84a")}</g>`;
+sv+=`<rect y="350" width="1200" height="70" fill="url(#riv)"/>`;
+for(let i=0;i<14;i++){const y=360+i*4.5,w=80-i*4;sv+=`<rect x="${820-w/2+((i%3)-1)*8}" y="${y}" width="${w}" height="2" fill="#ffcf6a" opacity="${.8-i*.05}"/>`}
+sv+=`<path d="M300 388 h90 l-12 10 h-70z" fill="#1c0204"/><path d="M330 388 v-14 h30 v14" fill="#1c0204"/>`;
+scene.innerHTML=sv;
+
+/* countdown */
+const DEP=Date.UTC(2026,11,26,5,10);
+const tick=()=>{const ms=DEP-Date.now();if(ms>0){const d=Math.ceil(ms/864e5);$("cd").textContent=d;$("cdl").textContent=d===1?"dia para embarcar":"dias para embarcar"}else{$("cd").textContent="0";$("cdl").textContent="Boa viagem!"}
+ const f=tz=>new Intl.DateTimeFormat("pt-BR",{timeZone:tz,hour:"2-digit",minute:"2-digit",weekday:"short"}).format(new Date());
+ $("c-sp").textContent=f("America/Sao_Paulo");$("c-doh").textContent=f("Asia/Qatar");$("c-bkk").textContent=f("Asia/Bangkok")};
+tick();const timer=setInterval(tick,30000);
+
+/* flights */
+$("flights").innerHTML=FLIGHTS.map((f,i)=>`<article class="pass"><div class="main"><span class="tag">Trecho ${i+1} · Qatar Airways</span>
+<div class="route"><div><div class="iata">${f.from}</div><small>${esc(f.fromN)}</small></div><div class="path"><i>✈</i></div><div style="text-align:right"><div class="iata">${f.to}</div><small>${esc(f.toN)}</small></div></div>
+<div class="times"><div><span>Partida</span><b>${f.dep}</b><span>${f.depD}</span></div><div><span>Chegada</span><b>${f.arr}</b><span>${f.arrD}</span></div><div><span>Duração</span><b>${f.dur}</b></div></div></div>
+<div class="stub"><span>Voo</span><b>${f.no}</b><span>${i?"Doha → Bangkok":"SP → Doha"}</span><span style="font-size:13px;opacity:.85">Reserva QPVOUT</span></div></article>`+(i===0?`<div class="lay"><b>3h35</b> de conexão em Doha, com troca de avião.</div>`:"")).join("");
+
+/* copiar reserva */
+document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{const t=$(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(t);b.textContent="Copiado"}catch(e){b.textContent="Selecione"}setTimeout(()=>b.textContent="Copiar",1800)}));
+/* roteiro */
+const tick2=`<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>`;
+const renderDays=()=>{$("days").innerHTML=DAYS.map(d=>{const n=d.stops.length,c=d.stops.filter(s=>checks[d.id+s.id]).length;return`<button data-d="${d.id}" aria-pressed="${d.id===cur}">${d.wd}<b>${d.d} dez</b>${n?c+"/"+n:"…"}</button>`}).join("")};
+const renderDay=()=>{const d=DAYS.find(x=>x.id===cur)||DAYS[0];const n=d.stops.length,c=d.stops.filter(s=>checks[d.id+s.id]).length;
+ let h=`<div class="dayhead"><div><span class="tag">Dia ${DAYS.indexOf(d)+1} · ${d.wd}, ${d.d} dez</span><h3 style="font-size:28px">${esc(d.title)}</h3>${d.theme?`<p class="sub" style="margin:4px 0 0">${esc(d.theme)}</p>`:""}</div>${n?`<span class="prog">${c} de ${n} feitos</span>`:""}</div>`;
+ if(d.note)h+=`<p class="tip">${esc(d.note)}</p>`;
+ if(!n)h+=`<div class="pend" style="margin-top:14px">Roteiro deste dia ainda vai ser enviado.</div>`;
+ else h+=`<ol class="tl">`+d.stops.map(s=>{const done=checks[d.id+s.id]?" done":"";
+  if(s.k==="simple")return`<li><div class="hr">${s.t}${s.te?`<small>até ${s.te}</small>`:""}</div><div class="stop simple${done}" style="display:flex;gap:12px;align-items:center"><div style="flex:1"><h3 style="font-size:19px">${esc(s.name)}</h3><div class="sub" style="margin:2px 0 0">${esc(s.txt)}</div></div><button class="chk" data-c="${d.id+s.id}" aria-label="Marcar ${esc(s.name)}">${tick2}</button></div></li>`;
+  return`<li><div class="hr">${s.t}<small>${s.te?"até "+s.te:"sugerido"}</small></div><article class="stop${done}">${s.ph?`<img class="foto" src="img/${s.ph}.jpg" alt="${esc(s.name)}" loading="lazy">`:""}<div class="top"><h3>${esc(s.name)}<small>${s.th}</small></h3><button class="chk" data-c="${d.id+s.id}" aria-label="Marcar ${esc(s.name)} como visitado">${tick2}</button></div><div class="body"><p style="margin:0">${esc(s.what)}</p>
+<div class="facts">${s.facts.map(f=>`<div><span>${f[0]}</span><b>${esc(f[1])}</b></div>`).join("")}</div>
+${s.see?`<b class="disp" style="font-weight:600">${s.seeLabel||"O que conhecer"}</b><ul class="see">${s.see.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
+${s.table?`<div class="ttab"><b class="disp" style="font-weight:600">${esc(s.table.title)}</b><table>${s.table.rows.map(r=>`<tr${s.facts.some(f=>f[1].includes(r[1].replace("h",":").slice(0,5))||f[1].includes(r[1]))?' class="hl"':""}><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table></div>`:""}${s.how?`<p style="margin:10px 0 0"><b class="disp" style="font-weight:600">Como chegar saindo do Wat Pho: </b>${esc(s.how)}</p>`:""}
+<div class="tip"><b>Dica:</b> ${esc(s.tip)}</div>
+<div class="acts"><a class="btn pri" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.map)}" target="_blank" rel="noopener">Abrir no Maps</a>${(s.links||[]).map(l=>`<a class="btn" href="${l[1]}" target="_blank" rel="noopener">${esc(l[0])}</a>`).join("")}</div></div></article></li>`}).join("")+`</ol>`;
+ h+=`<div class="card" style="margin-top:8px"><label for="nt">Nossas anotações do dia</label><textarea id="nt" placeholder="Restaurantes, lembretes, o que comprar...">${esc(store.get("tl-note-"+d.id,""))}</textarea></div>`;
+ $("day").innerHTML=h;
+ $("nt").addEventListener("input",e=>store.set("tl-note-"+d.id,e.target.value))};
+$("days").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;cur=b.dataset.d;store.set("tl-day",cur);renderDays();renderDay()});
+$("day").addEventListener("click",e=>{const b=e.target.closest(".chk");if(!b)return;const k=b.dataset.c;checks[k]=!checks[k];store.set("tl-checks",checks);renderDays();renderDay()});
+renderDays();renderDay();
+
+/* conversor */
+const conv=()=>{const v=parseFloat($("thb").value)||0,r=parseFloat($("rate").value)||0;$("brl").textContent=(v*r).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});store.set("tl-rate",$("rate").value)};
+$("rate").value=store.get("tl-rate","0.165");$("thb").addEventListener("input",conv);$("rate").addEventListener("input",conv);conv();
+
+/* rotas */
+const views=["inicio","voos","roteiro","info"];
+const route=()=>{let v=location.hash.slice(1);if(!views.includes(v))v="inicio";views.forEach(x=>$("v-"+x).classList.toggle("on",x===v));document.querySelectorAll("nav.tabs a").forEach(a=>a.dataset.v===v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"))};
+window.addEventListener("hashchange",()=>{route();const v=document.querySelector("section.view.on");if(v&&location.hash.slice(1)!=="inicio"&&location.hash)v.scrollIntoView({block:"start"});else window.scrollTo({top:0})});route();
+}
+</script>
+</body>
+</html>
