@@ -174,6 +174,25 @@ button.mini{border:0;cursor:pointer}
 .rota div:last-child{border-bottom:0}
 .rota b{font:600 17px Kanit}
 .rota span{font:500 14px Kanit;color:var(--soft);white-space:nowrap}
+.meters{display:grid;gap:12px;margin-bottom:26px}
+.mt{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px}
+.mh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline;margin-bottom:8px}
+.mh b{font:600 18px Kanit}.mh span{font:500 14px Kanit;color:var(--jade);white-space:nowrap}
+.mt .bar{margin:0}
+.leg{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 14px 10px;margin-bottom:12px}
+.lh{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line)}
+.lh .fl{font-size:22px}.lh b{font:600 20px Kanit}.lh span:last-child{font:500 14px Kanit;color:var(--soft)}
+.slot{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line);color:var(--ink);text-decoration:none}
+.slot:last-child{border-bottom:0}
+.slot .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--chip)}
+.slot .ic svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.slot.ok .ic{background:color-mix(in srgb,#0f7a5a 18%,transparent)}.slot.ok .ic svg{stroke:var(--jade)}
+.slot.to .ic{border:2px dashed #b07d10}
+.slot small{display:block;font:500 12px Kanit;color:var(--soft)}
+.slot b{display:block;font:600 16px/1.2 Kanit}
+.slot em{display:block;font-style:normal;font-size:14px;color:var(--soft);overflow-wrap:anywhere}
+.slot.none b{color:var(--soft);font-weight:500}
+@media(max-width:600px){.slot{grid-template-columns:36px minmax(0,1fr)}.slot .pill{grid-column:2;justify-self:start}}
 .pend{border:2px dashed var(--line);border-radius:18px;padding:22px;text-align:center;color:var(--soft)}
 textarea,input{font:16px Sarabun;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%}
 textarea{min-height:96px;resize:vertical}
@@ -267,10 +286,11 @@ label{font:500 14px Kanit;display:block;margin-bottom:6px}
     <a class="back" href="#inicio"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Voltar ao início</a>
     <h2>Status da viagem</h2>
     <p class="sub">O que já está garantido, o que falta reservar e o roteiro completo, dia a dia.</p>
-    <h3 class="sh">Rota da viagem</h3>
-    <div class="rota" id="rota-st"></div>
-    <div class="sumr" id="st-sum"></div>
-    <h3 class="sh">Reservas</h3>
+    <div class="meters" id="st-sum"></div>
+    <h3 class="sh">Hotéis e passagens por etapa</h3>
+    <p class="sub">Montado a partir do roteiro. Cada etapa tem o espaço da hospedagem e o da passagem de chegada.</p>
+    <div id="st-legs"></div>
+    <h3 class="sh">Passeios e documentos</h3>
     <div class="res" id="st-res"></div>
     <h3 class="sh">Roteiro completo</h3>
     <div id="st-days"></div>
@@ -343,7 +363,7 @@ const VOLTA=[
 const DAYS=[
  {id:"d27",wd:"Dom",d:"27",title:"Templos e Chinatown",theme:"Cultura, arquitetura e gastronomia",stops:[
   {id:"arr",t:"11:45",k:"simple",name:"Chegada em Bangkok",txt:"Pouso no aeroporto Suvarnabhumi, imigração e bagagens."},
-  {id:"hotel",t:"13:00",tn:"check-in 14h",name:"Novotel Bangkok Bangna",th:"โนโวเทล กรุงเทพ บางนา",what:"Nossa base em Bangkok por 4 noites. Deixar as malas, descansar um pouco, tomar banho e sair para a cidade.",
+  {id:"hotel",si:"27 a 31/12 · 4 noites",t:"13:00",tn:"check-in 14h",name:"Novotel Bangkok Bangna",th:"โนโวเทล กรุงเทพ บางนา",what:"Nossa base em Bangkok por 4 noites. Deixar as malas, descansar um pouco, tomar banho e sair para a cidade.",
    facts:[["Endereço","333 Srinakarin Road, Nongbon, Pravet, Bangkok 10250"],["Check-in","Dom, 27 dez · a partir das 14h, sem horário limite"],["Check-out","Qui, 31 dez · meio-dia"],["Quarto","Standard · 1 cama Queen · não fumante"],["Reservado para","Ricardo Impellizieri · 2 adultos"],["Itinerário Hoteis.com","72081555904942"],["Valor","R$ 1.194,57 pago"],["Cancelamento","Não reembolsável"]],
    tip:"O hotel fica em Bang Na, na zona leste, a cerca de 25 km dos templos e de Chinatown (uns 45 min a 1h de carro, conforme o trânsito). Fica perto do aeroporto Suvarnabhumi, onde chegamos.",map:"Novotel Bangkok Bangna",links:[["Baixar voucher (PDF)","pdf:hospedagem-bangkok"]]},
   {id:"watpho",t:"14:30",ph:"watpho1",name:"Wat Pho",th:"วัดโพธิ์",what:"Um dos templos budistas mais importantes de Bangkok, famoso pelo gigantesco Buda Reclinado, com aproximadamente 46 metros de comprimento.",
@@ -388,10 +408,10 @@ const DAYS=[
  {id:"d30",wd:"Qua",d:"30",title:"A definir",stops:[]},
  {id:"d31",wd:"Qui",d:"31",title:"Rumo a Chiang Mai e Ano Novo",theme:"Chiang Mai de 31/12 a 03/01 · lanternas celestes na virada para 2027",stops:[
   {id:"saidabkk",t:"08:45",k:"simple",name:"Check-out do Novotel e ida ao aeroporto Don Mueang",txt:"Atenção: o voo sai do Don Mueang (DMK), não do Suvarnabhumi onde chegamos. Chegar por volta das 9h30."},
-  {id:"rota",t:"11:30",tn:"FD 3447",svg:"route",name:"Voo Bangkok → Chiang Mai",th:"กรุงเทพฯ → เชียงใหม่",what:"Voo direto da Thai AirAsia, classe econômica. Pouso em Chiang Mai às 12:40, com tempo de sobra para o check-in no hotel às 14h.",
+  {id:"rota",si:"Thai AirAsia FD 3447 · qui 31/12 · DMK 11:30 → CNX 12:40",t:"11:30",tn:"FD 3447",svg:"route",name:"Voo Bangkok → Chiang Mai",th:"กรุงเทพฯ → เชียงใหม่",what:"Voo direto da Thai AirAsia, classe econômica. Pouso em Chiang Mai às 12:40, com tempo de sobra para o check-in no hotel às 14h.",
    facts:[["Voo","Thai AirAsia FD 3447"],["Partida","11:30 · Don Mueang (DMK)"],["Chegada","12:40 · Chiang Mai (CNX)"],["Duração","1h10, direto"],["Referência da reserva","CIU2WX"],["Bagagem","2 de mão (5 kg cada) + 1 despachada (15 kg)"]],
    tip:"Mala de mão da AirAsia tem limite de 5 kg e costuma ser pesada no embarque. O excesso vai na despachada de 15 kg.",map:"Don Mueang International Airport",links:[["Baixar voucher (PDF)","pdf:voo-chiang-mai"]]},
-  {id:"hotelcnx",t:"14:00",tn:"check-in",ph:"hotel-cnx",name:"Lanna Oriental Hotel",th:"Chiang Mai",what:"Nossa base em Chiang Mai na virada do ano: 2 diárias, de 31 de dezembro a 2 de janeiro.",
+  {id:"hotelcnx",si:"31/12 a 02/01 · 2 noites · café incluído",t:"14:00",tn:"check-in",ph:"hotel-cnx",name:"Lanna Oriental Hotel",th:"Chiang Mai",what:"Nossa base em Chiang Mai na virada do ano: 2 diárias, de 31 de dezembro a 2 de janeiro.",
    facts:[["Endereço","Singharat Rd. 7, T. Sriphum, A. Muang, Chiang Mai 50200"],["Check-in","Qui, 31 dez · a partir das 14h, sem horário limite"],["Check-out","Sáb, 2 jan 2027 · meio-dia"],["Quarto","Lanna Superior · 2 camas de solteiro · não fumante"],["Café da manhã","Incluído"],["Reservado para","Ricardo Impellizieri · 2 adultos"],["Itinerário Hoteis.com","72081032660989"],["Valor","R$ 1.619,90 pago (inclui seguro viagem de R$ 171,24)"],["Cancelamento grátis","Até 17 dez 2026, 14h no horário de Chiang Mai"]],
    tip:"Depois de 17 de dezembro às 14h (hora local, 4h da manhã em SP), cancelar ou alterar custa 100% do valor. Depois do check-in, descansar e se arrumar: às 17h começa o encontro do Ano Novo no aeroporto, a cerca de 15 minutos de carro.",map:"Lanna Oriental Hotel Singharat Road Chiang Mai",links:[["Baixar voucher (PDF)","pdf:hospedagem-chiang-mai"]]},
   {id:"anonovo",t:"17:00",tn:"até 0h25",ph:"lanternas",name:"Réveillon CAD 2027 · Lanternas celestes",th:"ปีใหม่ 2027",what:"Contagem regressiva oficial de Ano Novo de Chiang Mai, com soltura de lanternas dos desejos, apresentações da cultura Lanna e grande show de fogos de artifício.",
@@ -422,7 +442,7 @@ const DAYS=[
    see:["As ruínas do grande chedi com escadarias de nagas","A réplica do Buda de Esmeralda no nicho leste","O pilar da cidade (Sao Inthakin)","O \"monk chat\", conversa com monges"],
    tip:"Levar notas pequenas: a entrada é paga em dinheiro na bilheteria perto do chedi.",map:"Wat Chedi Luang Chiang Mai"},
   {id:"checkout",t:"12:00",k:"simple",name:"Check-out do Lanna Oriental",txt:"Check-out até o meio-dia. Levar as malas para o novo hotel (perto, na cidade antiga) e almoçar por lá."},
-  {id:"hotelcnx2",t:"14:00",tn:"check-in",pend:true,name:"Novo hotel em Chiang Mai",th:"2 a 3 de janeiro",what:"Hospedagem para a noite de 2 de janeiro. Ainda não reservado.",
+  {id:"hotelcnx2",si:"02 a 03/01 · 1 noite",t:"14:00",tn:"check-in",pend:true,name:"Novo hotel em Chiang Mai",th:"2 a 3 de janeiro",what:"Hospedagem para a noite de 2 de janeiro. Ainda não reservado.",
    facts:[["Check-in","Sáb, 2 jan 2027"],["Check-out","Dom, 3 jan 2027"],["Noites","1"],["Hóspedes","2 adultos"],["Status","A reservar"]],
    tip:"Escolher um hotel perto do Lanna Oriental, na cidade antiga, facilita a troca. Na manhã seguinte a saída é cedo, de carro, para Chiang Rai.",map:"hotels Chiang Mai Old City"},
   {id:"chiangman",t:"14:30",ill:"chiangman",name:"Wat Chiang Man",th:"วัดเชียงมั่น",what:"O templo mais antigo de Chiang Mai, construído pelo rei Mangrai na fundação da cidade, em 1296. Famoso pelo chedi sustentado por elefantes.",
@@ -439,7 +459,7 @@ const DAYS=[
    tip:"Negociar os preços com simpatia. Do Portão Tha Phae dá para ir a pé em uns 15 minutos.",map:"Chiang Mai Night Bazaar"}
  ],note:"Dia todo na cidade antiga. Os templos ficam a poucos minutos a pé uns dos outros e do hotel."},
  {id:"d03",wd:"Dom",d:"3",m:"jan",title:"Chiang Rai",theme:"Templo Branco, Templo Azul e vila Karen · à noite, rumo a Phuket",stops:[
-  {id:"saidacei",t:"07:00",k:"simple",name:"Check-out e saída de carro para Chiang Rai",txt:"Carro com motorista saindo do hotel com as malas: ≈ 180 km, de 3h a 3h30 de estrada. A ordem das visitas segue o caminho: o Templo Branco fica na chegada a Chiang Rai."},
+  {id:"saidacei",pend:true,si:"dom 03/01 · Chiang Mai → Chiang Rai → aeroporto CEI",t:"07:00",k:"simple",name:"Check-out e saída de carro para Chiang Rai",txt:"Carro com motorista saindo do hotel com as malas: ≈ 180 km, de 3h a 3h30 de estrada. A ordem das visitas segue o caminho: o Templo Branco fica na chegada a Chiang Rai."},
   {id:"branco",t:"10:15",ill:"branco",name:"Templo Branco · Wat Rong Khun",th:"วัดร่องขุ่น",what:"Templo contemporâneo todo branco, obra do artista nacional Chalermchai Kositpipat, com a ponte sobre o \"lago das mãos\" e detalhes em espelho.",
    facts:[["Localização","Pa O Don Chai, ao sul da cidade de Chiang Rai"],["Horário","Aprox. 8h às 17h"],["Entrada","200 THB para estrangeiros (desde 1/1/2026)"],["Tempo de visita","1h a 1h30"]],
    see:["A ponte do renascimento e as mãos que saem do chão","O salão principal (ubosot) branco e espelhado","Os murais internos","O prédio dourado, que é o banheiro mais famoso do país"],
@@ -452,65 +472,65 @@ const DAYS=[
   {id:"karen",t:"14:30",ill:"vila",name:"Vila das mulheres de pescoço comprido",th:"Vila Karen (Kayan)",what:"Vila do povo Kayan, da etnia Karen, conhecido pelas argolas de latão que as mulheres usam no pescoço. Há artesanato e tecidos à venda.",
    facts:[["Localização","Arredores de Chiang Rai (várias vilas; combinar qual com o motorista)"],["Entrada","≈ 300 THB por pessoa"],["Tempo de visita","45 min a 1h"]],
    tip:"É um tema que divide opiniões, por funcionar como atração turística com moradores. Comprar o artesanato direto das famílias é a forma mais direta de a renda ficar com elas.",map:"Long Neck Karen Village Chiang Rai"},
-  {id:"voohkt",t:"A definir",tn:"voo",pend:true,ill:"r_hkt",name:"Voo Chiang Rai → Phuket",th:"เชียงราย → ภูเก็ต",what:"Saída do aeroporto de Chiang Rai (CEI) no fim da tarde, com conexão em Bangkok. O voo direto da Thai Vietjet não opera aos domingos.",
+  {id:"voohkt",si:"dom 03/01 · CEI → HKT, conexão em Bangkok",t:"A definir",tn:"voo",pend:true,ill:"r_hkt",name:"Voo Chiang Rai → Phuket",th:"เชียงราย → ภูเก็ต",what:"Saída do aeroporto de Chiang Rai (CEI) no fim da tarde, com conexão em Bangkok. O voo direto da Thai Vietjet não opera aos domingos.",
    facts:[["De","Chiang Rai (CEI)"],["Para","Phuket (HKT)"],["Domingo, 3/1","Só com conexão em Bangkok (BKK ou DMK)"],["Direto","Thai Vietjet, seg, qua e sex, ≈ 2h15"],["Status","A reservar"]],
    tip:"Alternativa: dormir em Chiang Rai no dia 3 e pegar o voo direto na segunda, 4/1, chegando a Phuket um dia depois.",map:"Chiang Rai International Airport"},
-  {id:"hotelhkt",t:"A definir",tn:"check-in",pend:true,ill:"praia",name:"Hotel em Phuket",th:"3 a 5 de janeiro",what:"Hospedagem em Phuket para as noites de 3 e 4 de janeiro, com chegada tarde da noite no dia 3. Ainda não reservado.",
+  {id:"hotelhkt",si:"03 a 05/01 · 2 noites",t:"A definir",tn:"check-in",pend:true,ill:"praia",name:"Hotel em Phuket",th:"3 a 5 de janeiro",what:"Hospedagem em Phuket para as noites de 3 e 4 de janeiro, com chegada tarde da noite no dia 3. Ainda não reservado.",
    facts:[["Check-in","Dom, 3 jan 2027"],["Check-out","Ter, 5 jan 2027"],["Noites","2"],["Hóspedes","2 adultos"],["Status","A reservar"]],
    tip:"Os barcos para Phi Phi saem do píer de Rassada, na cidade de Phuket. Um hotel no lado leste ou com traslado incluído facilita a saída do dia 5.",map:"Phuket hotels"}
  ]},
  {id:"d04",wd:"Seg",d:"4",m:"jan",title:"A definir",theme:"🇹🇭 Phuket",stops:[]},
  {id:"d05",wd:"Ter",d:"5",m:"jan",title:"Rumo a Phi Phi",theme:"🇹🇭 Phi Phi de 05/01 a 07/01",stops:[
-  {id:"barcopp",t:"A definir",tn:"barco",pend:true,ill:"r_pp",name:"Barco Phuket → Phi Phi",th:"ภูเก็ต → เกาะพีพี",what:"Ferry ou lancha do píer de Rassada (cidade de Phuket) até o píer de Tonsai, em Koh Phi Phi Don.",
+  {id:"barcopp",si:"ter 05/01 · Rassada → Tonsai",t:"A definir",tn:"barco",pend:true,ill:"r_pp",name:"Barco Phuket → Phi Phi",th:"ภูเก็ต → เกาะพีพี",what:"Ferry ou lancha do píer de Rassada (cidade de Phuket) até o píer de Tonsai, em Koh Phi Phi Don.",
    facts:[["Saída","Píer de Rassada, Phuket"],["Chegada","Píer de Tonsai, Phi Phi"],["Duração","≈ 1h (lancha) a 2h (ferry)"],["Horários","Primeiros barcos ≈ 8h30, últimos ≈ 15h"],["Status","A reservar"]],
    tip:"Há bilhetes com busca no hotel de Phuket. A lancha é mais rápida, mas balança mais; com mala grande, o ferry é mais confortável.",map:"Rassada Pier Phuket"},
-  {id:"hotelpp",t:"A definir",tn:"check-in",pend:true,ill:"praia",name:"Hotel em Phi Phi",th:"5 a 7 de janeiro",what:"Hospedagem em Koh Phi Phi para as noites de 5 e 6 de janeiro. Ainda não reservado.",
+  {id:"hotelpp",si:"05 a 07/01 · 2 noites",t:"A definir",tn:"check-in",pend:true,ill:"praia",name:"Hotel em Phi Phi",th:"5 a 7 de janeiro",what:"Hospedagem em Koh Phi Phi para as noites de 5 e 6 de janeiro. Ainda não reservado.",
    facts:[["Check-in","Ter, 5 jan 2027"],["Check-out","Qui, 7 jan 2027"],["Noites","2"],["Hóspedes","2 adultos"],["Status","A reservar"]],
    tip:"Na ilha não há carros: hotéis perto do píer de Tonsai evitam carregar mala por trilhas ou pegar barco-táxi.",map:"Koh Phi Phi hotels Tonsai"}
  ]},
  {id:"d06",wd:"Qua",d:"6",m:"jan",title:"A definir",theme:"🇹🇭 Phi Phi",stops:[]},
  {id:"d07",wd:"Qui",d:"7",m:"jan",title:"Rumo a Krabi",theme:"🇹🇭 Krabi de 07/01 a 09/01",stops:[
-  {id:"barcokbv",t:"A definir",tn:"barco",pend:true,ill:"r_kbv",name:"Barco Phi Phi → Krabi",th:"เกาะพีพี → กระบี่",what:"Ferry do píer de Tonsai para Krabi: Ao Nang (píer Nopparat Thara) ou a cidade de Krabi (píer Klong Jilad).",
+  {id:"barcokbv",si:"qui 07/01 · Tonsai → Ao Nang ou Krabi",t:"A definir",tn:"barco",pend:true,ill:"r_kbv",name:"Barco Phi Phi → Krabi",th:"เกาะพีพี → กระบี่",what:"Ferry do píer de Tonsai para Krabi: Ao Nang (píer Nopparat Thara) ou a cidade de Krabi (píer Klong Jilad).",
    facts:[["Saída","Píer de Tonsai, Phi Phi"],["Chegada","Ao Nang ou Krabi Town"],["Duração","≈ 1h30 a 2h"],["Status","A reservar"]],
    tip:"Escolher o píer de chegada conforme o hotel: Ao Nang fica na praia, Klong Jilad fica na cidade.",map:"Tonsai Pier Koh Phi Phi"},
-  {id:"hotelkbv",t:"A definir",tn:"check-in",pend:true,ill:"praia",name:"Hotel em Krabi",th:"7 a 9 de janeiro",what:"Hospedagem em Krabi para as noites de 7 e 8 de janeiro. Ainda não reservado.",
+  {id:"hotelkbv",si:"07 a 09/01 · 2 noites",t:"A definir",tn:"check-in",pend:true,ill:"praia",name:"Hotel em Krabi",th:"7 a 9 de janeiro",what:"Hospedagem em Krabi para as noites de 7 e 8 de janeiro. Ainda não reservado.",
    facts:[["Check-in","Qui, 7 jan 2027"],["Check-out","Sáb, 9 jan 2027"],["Noites","2"],["Hóspedes","2 adultos"],["Status","A reservar"]],
    tip:"Ao Nang é a base mais prática para praias e passeios de barco (Railay, 4 ilhas).",map:"Ao Nang hotels Krabi"}
  ]},
  {id:"d08",wd:"Sex",d:"8",m:"jan",title:"A definir",theme:"🇹🇭 Krabi",stops:[]},
  {id:"d09",wd:"Sáb",d:"9",m:"jan",title:"Rumo ao Camboja",theme:"🇰🇭 Siem Reap de 09/01 a 11/01",stops:[
-  {id:"voosai",t:"A definir",tn:"voo",pend:true,ill:"r_sai",name:"Voo Krabi → Siem Reap",th:"กระบี่ → សៀមរាប",what:"Não há voo direto: a ligação é com conexão em Bangkok (Thai AirAsia, Bangkok Airways ou Thai Airways), chegando ao novo aeroporto de Siem Reap (SAI).",
+  {id:"voosai",si:"sáb 09/01 · KBV → SAI, conexão em Bangkok",t:"A definir",tn:"voo",pend:true,ill:"r_sai",name:"Voo Krabi → Siem Reap",th:"กระบี่ → សៀមរាប",what:"Não há voo direto: a ligação é com conexão em Bangkok (Thai AirAsia, Bangkok Airways ou Thai Airways), chegando ao novo aeroporto de Siem Reap (SAI).",
    facts:[["De","Krabi (KBV)"],["Para","Siem Reap Angkor (SAI)"],["Conexão","Bangkok (BKK ou DMK)"],["Duração total","≈ 4h30 a 9h, conforme a conexão"],["Status","A reservar"]],
    tip:"Se a conexão for em companhias diferentes, deixar folga entre os voos. O aeroporto SAI fica fora da cidade: reservar traslado com o hotel.",map:"Krabi International Airport"},
   {id:"vistokh",t:"Antes",tn:"da viagem",pend:true,k:"",name:"Visto do Camboja",th:"Obrigatório para brasileiros",what:"Brasileiros precisam de visto para o Camboja. Dá para tirar o e-Visa online antes ou o visto na chegada ao aeroporto.",
    facts:[["e-Visa","US$ 30 · evisa.gov.kh · ≈ 3 dias úteis"],["Na chegada","≈ US$ 35 em dinheiro"],["Também","Cartão de chegada eletrônico (e-Arrival) até 7 dias antes"],["Passaporte","Validade mínima de 6 meses"],["Status","A fazer"]],
    tip:"Usar só o site oficial evisa.gov.kh: há muitos sites intermediários que cobram bem mais.",map:"Siem Reap Angkor International Airport"},
-  {id:"hotelsai",t:"A definir",tn:"check-in",pend:true,ill:"angkor",name:"Hotel em Siem Reap",th:"9 a 11 de janeiro",what:"Hospedagem em Siem Reap, base para os templos de Angkor, nas noites de 9 e 10 de janeiro. Ainda não reservado.",
+  {id:"hotelsai",si:"09 a 11/01 · 2 noites",t:"A definir",tn:"check-in",pend:true,ill:"angkor",name:"Hotel em Siem Reap",th:"9 a 11 de janeiro",what:"Hospedagem em Siem Reap, base para os templos de Angkor, nas noites de 9 e 10 de janeiro. Ainda não reservado.",
    facts:[["Check-in","Sáb, 9 jan 2027"],["Check-out","Seg, 11 jan 2027"],["Noites","2"],["Hóspedes","2 adultos"],["Status","A reservar"]],
    tip:"Muitos hotéis oferecem traslado do aeroporto e tuk-tuk com motorista para o dia nos templos.",map:"Siem Reap hotels"}
  ]},
  {id:"d10",wd:"Dom",d:"10",m:"jan",title:"A definir",theme:"🇰🇭 Angkor",stops:[]},
  {id:"d11",wd:"Seg",d:"11",m:"jan",title:"Rumo a Singapura",theme:"🇸🇬 Singapura de 11/01 a 13/01",stops:[
-  {id:"voosin",t:"A definir",tn:"voo",pend:true,ill:"r_sin",name:"Voo Siem Reap → Singapura",th:"Siem Reap → Singapore",what:"Voo direto do aeroporto SAI para o Changi, operado pela Singapore Airlines e pela AirAsia Cambodia.",
+  {id:"voosin",si:"seg 11/01 · SAI → SIN, direto",t:"A definir",tn:"voo",pend:true,ill:"r_sin",name:"Voo Siem Reap → Singapura",th:"Siem Reap → Singapore",what:"Voo direto do aeroporto SAI para o Changi, operado pela Singapore Airlines e pela AirAsia Cambodia.",
    facts:[["De","Siem Reap Angkor (SAI)"],["Para","Singapura Changi (SIN)"],["Duração","≈ 2h15 a 2h35, direto"],["Fuso","Singapura é 1h à frente do Camboja"],["Status","A reservar"]],
    tip:"Brasileiros não precisam de visto para Singapura, mas é obrigatório preencher o SG Arrival Card online nos 3 dias antes da chegada.",map:"Siem Reap Angkor International Airport"},
-  {id:"hotelsin",t:"A definir",tn:"check-in",pend:true,ill:"sing",name:"Hotel em Singapura",th:"11 a 13 de janeiro",what:"Hospedagem em Singapura nas noites de 11 e 12 de janeiro. Ainda não reservado.",
+  {id:"hotelsin",si:"11 a 13/01 · 2 noites",t:"A definir",tn:"check-in",pend:true,ill:"sing",name:"Hotel em Singapura",th:"11 a 13 de janeiro",what:"Hospedagem em Singapura nas noites de 11 e 12 de janeiro. Ainda não reservado.",
    facts:[["Check-in","Seg, 11 jan 2027"],["Check-out","Qua, 13 jan 2027"],["Noites","2"],["Hóspedes","2 adultos"],["Status","A reservar"]],
    tip:"Marina Bay e Clarke Quay concentram os passeios e têm metrô direto para o aeroporto Changi.",map:"Singapore hotels Marina Bay"}
  ]},
  {id:"d12",wd:"Ter",d:"12",m:"jan",title:"A definir",theme:"🇸🇬 Singapura",stops:[]},
  {id:"d13",wd:"Qua",d:"13",m:"jan",title:"Volta a Bangkok",theme:"🇹🇭 Bangkok de 13/01 a 14/01",stops:[
-  {id:"voobkk2",t:"A definir",tn:"voo",pend:true,ill:"r_bkk",name:"Voo Singapura → Bangkok",th:"Singapore → กรุงเทพฯ",what:"Voo direto de Changi para Bangkok. Melhor chegar pelo Suvarnabhumi (BKK), de onde sai o voo de volta no dia 14.",
+  {id:"voobkk2",si:"qua 13/01 · SIN → BKK, direto",t:"A definir",tn:"voo",pend:true,ill:"r_bkk",name:"Voo Singapura → Bangkok",th:"Singapore → กรุงเทพฯ",what:"Voo direto de Changi para Bangkok. Melhor chegar pelo Suvarnabhumi (BKK), de onde sai o voo de volta no dia 14.",
    facts:[["De","Singapura (SIN)"],["Para","Bangkok Suvarnabhumi (BKK)"],["Duração","≈ 2h20, direto"],["Status","A reservar"]],
    tip:"Nova entrada na Tailândia: preencher de novo o TDAC (cartão de chegada digital) nos 3 dias antes.",map:"Singapore Changi Airport"},
-  {id:"hotelbkk2",t:"A definir",tn:"check-in",pend:true,name:"Hotel em Bangkok",th:"13 a 14 de janeiro",what:"Última noite na Tailândia. Ainda não reservado.",
+  {id:"hotelbkk2",si:"13 a 14/01 · 1 noite",t:"A definir",tn:"check-in",pend:true,name:"Hotel em Bangkok",th:"13 a 14 de janeiro",what:"Última noite na Tailândia. Ainda não reservado.",
    facts:[["Check-in","Qua, 13 jan 2027"],["Check-out","Qui, 14 jan 2027"],["Noites","1"],["Hóspedes","2 adultos"],["Status","A reservar"]],
    tip:"O voo de volta sai às 20:05 do Suvarnabhumi: um hotel perto do aeroporto ou da linha Airport Rail Link deixa o último dia livre.",map:"hotels near Suvarnabhumi Airport"}
  ]},
  {id:"d14",wd:"Qui",d:"14",m:"jan",title:"Volta para casa",theme:"🇧🇷 São Paulo · chegada sex, 15/01, 16:55",stops:[
   {id:"checkoutbkk2",t:"12:00",k:"simple",name:"Check-out do hotel em Bangkok",txt:"Últimas compras e almoço. Deixar as malas no hotel se o check-out for antes da saída para o aeroporto."},
   {id:"aeroporto14",t:"17:00",k:"simple",name:"Chegar ao aeroporto Suvarnabhumi (BKK)",txt:"Voo internacional: chegar 3 horas antes. Lembrar que a bagagem despachada não está incluída nessa passagem."},
-  {id:"voltagru",t:"20:05",tn:"MH 781",ill:"r_gru",name:"Voos de volta ao Brasil",th:"BKK → KUL → DOH → GRU",what:"Malaysia Airlines até Kuala Lumpur e Doha, e LATAM operado pela Qatar até Guarulhos. Chegada em São Paulo na sexta, 15 de janeiro, às 16:55.",
+  {id:"voltagru",si:"MH 781 + MH 164 + 5261 · sai qui 14/01 20:05 do BKK",t:"20:05",tn:"MH 781",ill:"r_gru",name:"Voos de volta ao Brasil",th:"BKK → KUL → DOH → GRU",what:"Malaysia Airlines até Kuala Lumpur e Doha, e LATAM operado pela Qatar até Guarulhos. Chegada em São Paulo na sexta, 15 de janeiro, às 16:55.",
    facts:[["Bangkok → Kuala Lumpur","MH 781 · 20:05 → 23:25"],["Kuala Lumpur → Doha","MH 164 · 02:30 → 05:15"],["Doha → São Paulo","5261 · 07:50 → 16:55"],["Check-in","B8EU6Y (Malaysia) · QPVOUT (Qatar)"]],
    tip:"Todos os detalhes e os cartões de embarque estão na aba Voos.",map:"Suvarnabhumi Airport",links:[["Baixar voucher (PDF)","pdf:voo-tailandia"]]}
  ]}
@@ -653,53 +673,59 @@ renderDays();renderDay();
 
 /* rota */
 const ROTA=[["🇹🇭","Bangkok","27/12 a 31/12"],["🇹🇭","Chiang Mai","31/12 a 03/01"],["🇹🇭","Chiang Rai","03/01 · passeio"],["🇹🇭","Phuket","03/01 a 05/01"],["🇹🇭","Phi Phi","05/01 a 07/01"],["🇹🇭","Krabi","07/01 a 09/01"],["🇰🇭","Camboja · Siem Reap","09/01 a 11/01"],["🇸🇬","Singapura","11/01 a 13/01"],["🇹🇭","Bangkok","13/01 a 14/01"],["🇧🇷","São Paulo","14/01 · chegada 15/01"]];
-["rota-in","rota-st"].forEach(id=>{$(id).innerHTML=ROTA.map(r=>`<div><span style="font-size:20px">${r[0]}</span><b>${r[1]}</b><span>${r[2]}</span></div>`).join("")});
+["rota-in"].forEach(id=>{$(id).innerHTML=ROTA.map(r=>`<div><span style="font-size:20px">${r[0]}</span><b>${r[1]}</b><span>${r[2]}</span></div>`).join("")});
 /* status */
 const RES=[
- {d:"26",m:"dez",name:"Voos de ida · GRU → DOH → BKK",info:"5262 + QR 828 · Decolar 589924364800 · check-in QPVOUT / B8EU6Y",st:"ok",pdf:"voo-tailandia"},
  {d:"26",m:"dez",name:"TDAC · cartão de chegada da Tailândia",info:"Preencher online nos 3 dias antes de 27/12",st:"to"},
- {d:"27",m:"dez",name:"Novotel Bangkok Bangna",info:"27 a 31 dez · 4 noites · Hoteis.com 72081555904942 · não reembolsável",st:"ok",pdf:"hospedagem-bangkok"},
  {d:"28",m:"dez",name:"Excursão mercado flutuante + mercado do trem",info:"Transporte de ida e volta e passeio de barco",st:"to"},
  {d:"28",m:"dez",name:"Jantar no Mazu",info:"Reserva online pelo Chope",st:"to"},
  {d:"29",m:"dez",name:"Ancient City",info:"Ingresso ≈ 800 THB, compra na bilheteria",st:"to"},
  {d:"29",m:"dez",name:"Rajadamnern Stadium",info:"Confirmar visitação ou luta na data",st:"def"},
- {d:"31",m:"dez",name:"Voo Bangkok → Chiang Mai",info:"Thai AirAsia FD 3447 · DMK 11:30 → CNX 12:40 · reserva CIU2WX",st:"ok",pdf:"voo-chiang-mai"},
- {d:"31",m:"dez",name:"Lanna Oriental Hotel · Chiang Mai",info:"31 dez a 2 jan · café incluído · Hoteis.com 72081032660989 · cancelamento grátis até 17 dez",st:"ok",pdf:"hospedagem-chiang-mai"},
  {d:"31",m:"dez",name:"Réveillon CAD 2027 · Lanternas celestes",info:"2 ingressos · reserva GYG996QG9ZL3 · Hualiying Travel",st:"ok",qr:["ingresso-1","ingresso-2"]},
- {d:"2",m:"jan",name:"Hotel em Chiang Mai, 2 a 3 jan",info:"1 noite · ainda não reservado",st:"to"},
- {d:"3",m:"jan",name:"Carro com motorista Chiang Mai → Chiang Rai",info:"Saída 7h com as malas · templos e vila Karen · deixa no aeroporto CEI",st:"to"},
- {d:"3",m:"jan",name:"Voo Chiang Rai → Phuket",info:"CEI → HKT · domingo só com conexão em Bangkok",st:"to"},
- {d:"3",m:"jan",name:"Hotel em Phuket, 3 a 5 jan",info:"2 noites",st:"to"},
- {d:"5",m:"jan",name:"Barco Phuket → Phi Phi",info:"Píer de Rassada → Tonsai · 1h a 2h",st:"to"},
- {d:"5",m:"jan",name:"Hotel em Phi Phi, 5 a 7 jan",info:"2 noites",st:"to"},
- {d:"7",m:"jan",name:"Barco Phi Phi → Krabi",info:"Tonsai → Ao Nang ou Klong Jilad · 1h30 a 2h",st:"to"},
- {d:"7",m:"jan",name:"Hotel em Krabi, 7 a 9 jan",info:"2 noites",st:"to"},
  {d:"9",m:"jan",name:"Visto do Camboja (e-Visa)",info:"US$ 30 em evisa.gov.kh + e-Arrival até 7 dias antes",st:"to"},
- {d:"9",m:"jan",name:"Voo Krabi → Siem Reap",info:"Com conexão em Bangkok",st:"to"},
- {d:"9",m:"jan",name:"Hotel em Siem Reap, 9 a 11 jan",info:"2 noites",st:"to"},
- {d:"11",m:"jan",name:"Voo Siem Reap → Singapura",info:"SAI → SIN · ≈ 2h15 a 2h35 direto",st:"to"},
  {d:"11",m:"jan",name:"SG Arrival Card · Singapura",info:"Preencher online nos 3 dias antes da chegada",st:"to"},
- {d:"11",m:"jan",name:"Hotel em Singapura, 11 a 13 jan",info:"2 noites",st:"to"},
- {d:"13",m:"jan",name:"Voo Singapura → Bangkok",info:"SIN → BKK · ≈ 2h20 direto",st:"to"},
- {d:"13",m:"jan",name:"TDAC · nova entrada na Tailândia",info:"Preencher de novo nos 3 dias antes de 13/01",st:"to"},
- {d:"13",m:"jan",name:"Hotel em Bangkok, 13 a 14 jan",info:"1 noite · perto do Suvarnabhumi",st:"to"},
- {d:"14",m:"jan",name:"Voos de volta · BKK → KUL → DOH → GRU",info:"MH 781 + MH 164 + 5261 · chegada em SP sex, 15 jan, 16:55",st:"ok",pdf:"voo-tailandia"}
+ {d:"13",m:"jan",name:"TDAC · nova entrada na Tailândia",info:"Preencher de novo nos 3 dias antes de 13/01",st:"to"}
+];
+const LEGS=[
+ {f:"🇹🇭",n:"Bangkok",dt:"27/12 a 31/12",tr:["@ida"],ht:["hotel"]},
+ {f:"🇹🇭",n:"Chiang Mai",dt:"31/12 a 03/01",tr:["rota"],ht:["hotelcnx","hotelcnx2"]},
+ {f:"🇹🇭",n:"Chiang Rai",dt:"03/01 · passeio, sem pernoite",tr:["saidacei"],ht:[]},
+ {f:"🇹🇭",n:"Phuket",dt:"03/01 a 05/01",tr:["voohkt"],ht:["hotelhkt"]},
+ {f:"🇹🇭",n:"Phi Phi",dt:"05/01 a 07/01",tr:["barcopp"],ht:["hotelpp"]},
+ {f:"🇹🇭",n:"Krabi",dt:"07/01 a 09/01",tr:["barcokbv"],ht:["hotelkbv"]},
+ {f:"🇰🇭",n:"Camboja · Siem Reap",dt:"09/01 a 11/01",tr:["voosai"],ht:["hotelsai"]},
+ {f:"🇸🇬",n:"Singapura",dt:"11/01 a 13/01",tr:["voosin"],ht:["hotelsin"]},
+ {f:"🇹🇭",n:"Bangkok",dt:"13/01 a 14/01",tr:["voobkk2"],ht:["hotelbkk2"]},
+ {f:"🇧🇷",n:"São Paulo",dt:"chegada sex, 15/01, 16:55",tr:["voltagru"],ht:[]}
 ];
 const ST={ok:["Reservado","s-ok"],to:["A reservar","s-to"],def:["A definir","s-def"]};
 const rk=r=>(r.m==="jan"?100:0)+(+r.d||0);
 RES.sort((a,b)=>rk(a)-rk(b));
+const ICO={hotel:'<svg viewBox="0 0 24 24"><path d="M3 18V7M3 13h18v5M21 18v-3a3 3 0 0 0-3-3h-7v1"/><circle cx="7" cy="10" r="2"/></svg>',voo:'<svg viewBox="0 0 24 24"><path d="M2 14l20-6-3 4-8 3-3 5-1-4z"/></svg>',barco:'<svg viewBox="0 0 24 24"><path d="M3 15h18l-3 5H6z"/><path d="M12 15V4l6 7h-6"/></svg>',carro:'<svg viewBox="0 0 24 24"><path d="M4 16V11l2-5h12l2 5v5z"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/></svg>'};
+const findStop=id=>{for(const d of DAYS)for(const x of d.stops)if(x.id===id)return{d,x};return null};
+const slot=(id,kind)=>{
+ if(id==="@ida")return{kind:"voo",name:"Voos de ida · GRU → DOH → BKK",info:"5262 + QR 828 · chegada dom, 27/12, 11:45 · Decolar 589924364800",st:"ok",pdf:"voo-tailandia",day:"d27"};
+ const f=findStop(id);if(!f)return null;const x=f.x;
+ const k=kind==="hotel"?"hotel":/barco/i.test(x.name)?"barco":/carro/i.test(x.name)?"carro":"voo";
+ const pdf=(x.links||[]).map(l=>l[1]).find(h=>h.startsWith("pdf:"));
+ const fact=n=>(x.facts||[]).find(r=>r[0]===n);
+ let info=x.si||x.th||"";const res=fact("Itinerário Hoteis.com")||fact("Referência da reserva");if(res)info+=" · "+res[0].replace("Itinerário ","").replace("Referência da reserva","Reserva")+" "+res[1];
+ 
+ return{kind:k,name:x.name,info,st:x.pend?"to":"ok",pdf:pdf&&pdf.slice(4),day:f.d.id}};
 const renderStatus=()=>{
- const c={ok:0,to:0,def:0};RES.forEach(r=>c[r.st]++);
- $("st-sum").innerHTML=Object.keys(ST).map(k=>`<div class="${ST[k][1]}"><b>${c[k]}</b><span>${ST[k][0]}</span></div>`).join("")+"";
- $("st-sum").insertAdjacentHTML("afterend","");
- const pct=Math.round(c.ok/RES.length*100);
- let bar=document.getElementById("st-bar");if(!bar){bar=document.createElement("div");bar.className="bar";bar.id="st-bar";bar.innerHTML="<i></i>";$("st-sum").after(bar)}
- bar.firstChild.style.width=pct+"%";bar.title=pct+"% reservado";
+ const S=[];LEGS.forEach(L=>{L.ht.forEach(i=>S.push(slot(i,"hotel")));L.tr.forEach(i=>S.push(slot(i,"tr")))});
+ const H=S.filter(x=>x&&x.kind==="hotel"),T=S.filter(x=>x&&x.kind!=="hotel"),X=RES.filter(r=>r.st!=="def");
+ const meter=(lab,arr)=>{const ok=arr.filter(x=>x.st==="ok").length;return`<div class="mt"><div class="mh"><b>${lab}</b><span>${ok} de ${arr.length} reservados</span></div><div class="bar"><i style="width:${Math.round(ok/arr.length*100)}%"></i></div></div>`};
+ $("st-sum").innerHTML=meter("Hospedagens",H)+meter("Passagens e traslados",T)+meter("Passeios e documentos",X);
+ const row=(r,lab)=>!r?"":`<a class="slot ${r.st}" href="#roteiro" data-go="${r.day}"><span class="ic">${ICO[r.kind]}</span><span class="sl"><small>${lab}</small><b>${esc(r.name)}</b><em>${esc(r.info)}</em>${r.pdf?`<button type="button" class="mini" data-pdf="${r.pdf}">Baixar voucher (PDF)</button>`:""}</span><span class="pill ${ST[r.st][1]}">${ST[r.st][0]}</span></a>`;
+ $("st-legs").innerHTML=LEGS.map(L=>`<div class="leg"><div class="lh"><span class="fl">${L.f}</span><b>${esc(L.n)}</b><span>${esc(L.dt)}</span></div>`+
+  L.tr.map(i=>row(slot(i,"tr"),"Chegada")).join("")+
+  (L.ht.length?L.ht.map(i=>row(slot(i,"hotel"),"Hospedagem")).join(""):`<div class="slot none"><span class="ic">${ICO.hotel}</span><span class="sl"><small>Hospedagem</small><b>${L.n==="São Paulo"?"Em casa":"Sem pernoite"}</b></span></div>`)+`</div>`).join("");
  $("st-res").innerHTML=RES.map(r=>`<div class="ri"><div class="dt"><b>${esc(r.d)}</b>${esc(r.m)}</div><div><h4>${esc(r.name)}</h4><p>${esc(r.info)}</p>${r.pdf?`<button type="button" class="mini" data-pdf="${r.pdf}">Baixar voucher (PDF)</button>`:""}${(r.qr||[]).map((q,i)=>` <button type="button" class="mini" data-pdf="${q}">Ingresso ${i+1} (QR)</button>`).join("")}</div><span class="pill ${ST[r.st][1]}">${ST[r.st][0]}</span></div>`).join("");
  $("st-days").innerHTML=DAYS.map(d=>{const n=d.stops.length,k=d.stops.filter(x=>checks[d.id+x.id]).length;
   return`<a class="sd" href="#roteiro" data-go="${d.id}"><div class="h"><b>${d.wd}, ${d.d} ${d.m||"dez"} · ${esc(d.title)}</b>${n?`<span>${k}/${n} feitos</span>`:""}</div>${n?`<ul>${d.stops.map(x=>`<li class="${checks[d.id+x.id]?"ok":""}"><em>${esc(x.t)}</em><span>${esc(x.name)}</span></li>`).join("")}</ul>`:`<div class="empty">Roteiro ainda não definido</div>`}</a>`}).join("");
 };
-$("st-days").addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;cur=a.dataset.go;store.set("tl-day",cur);renderDays();renderDay()},true);
+["st-days","st-legs"].forEach(id=>$(id).addEventListener("click",e=>{if(e.target.closest("[data-pdf]"))return;const a=e.target.closest("[data-go]");if(!a)return;cur=a.dataset.go;store.set("tl-day",cur);renderDays();renderDay()},true));
 renderStatus();
 /* vouchers com senha */
 const PWCHECK="9377f0f3799c585ad3ef6a92594598acc8fc390f6e77428b8594d9963c6e58b8";
@@ -725,7 +751,7 @@ const views=["inicio","voos","roteiro","status","info"];
 const route=()=>{let v=location.hash.slice(1);if(!views.includes(v))v="inicio";views.forEach(x=>$("v-"+x).classList.toggle("on",x===v));document.querySelectorAll("nav.tabs a").forEach(a=>a.dataset.v===v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"))};
 try{history.scrollRestoration="manual"}catch(e){}
 const toTop=()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0};
-document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();const h=a.getAttribute("href");if(location.hash!==h)location.hash=h;else{route();toTop()}});
+document.addEventListener("click",e=>{if(e.target.closest("[data-pdf]"))return;const a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();const h=a.getAttribute("href");if(location.hash!==h)location.hash=h;else{route();toTop()}});
 window.addEventListener("hashchange",()=>{route();toTop();requestAnimationFrame(toTop)});route();
 }
 </script>
