@@ -384,7 +384,10 @@ const DAYS=[
  ],note:"A virada para 2027 em Chiang Mai, a cidade das lanternas."},
  {id:"d01",wd:"Sex",d:"1",m:"jan",title:"A definir",theme:"Chiang Mai",stops:[]},
  {id:"d02",wd:"Sáb",d:"2",m:"jan",title:"Chiang Mai",theme:"Check-out do Lanna Oriental",stops:[
-  {id:"checkout",t:"12:00",k:"simple",name:"Check-out do Lanna Oriental",txt:"Saída do Lanna Oriental Hotel até as 12:00. Seguimos em Chiang Mai até 4 de janeiro: hospedagem das noites de 2 e 3 de janeiro a definir."}
+  {id:"checkout",t:"12:00",k:"simple",name:"Check-out do Lanna Oriental",txt:"Saída do Lanna Oriental Hotel até as 12:00. Seguimos em Chiang Mai até 4 de janeiro."},
+  {id:"hotelcnx2",t:"14:00",tn:"check-in",pend:true,name:"Novo hotel em Chiang Mai",th:"2 a 4 de janeiro",what:"Hospedagem para as noites de 2 e 3 de janeiro. Ainda não reservado.",
+   facts:[["Check-in","Sáb, 2 jan 2027"],["Check-out","Seg, 4 jan 2027"],["Noites","2"],["Hóspedes","2 adultos"],["Status","A reservar"]],
+   tip:"Escolher um hotel perto do Lanna Oriental, na cidade antiga, facilita a troca: dá para deixar as malas no novo hotel antes do check-in.",map:"hotels Chiang Mai Old City"}
  ]},
  {id:"d03",wd:"Dom",d:"3",m:"jan",title:"A definir",theme:"Chiang Mai",stops:[]},
  {id:"d04",wd:"Seg",d:"4",m:"jan",title:"A definir",theme:"Último dia em Chiang Mai",stops:[]}
@@ -435,7 +438,7 @@ const renderDay=()=>{const d=DAYS.find(x=>x.id===cur)||DAYS[0];const n=d.stops.l
  if(!n)h+=`<div class="pend" style="margin-top:14px">Roteiro deste dia ainda vai ser enviado.</div>`;
  else h+=`<ol class="tl">`+d.stops.map(s=>{const done=checks[d.id+s.id]?" done":"";
   if(s.k==="simple")return`<li><div class="hr">${s.t}${s.te?`<small>até ${s.te}</small>`:""}</div><div class="stop simple${done}" style="display:flex;gap:12px;align-items:center"><div style="flex:1"><h3 style="font-size:19px">${esc(s.name)}</h3><div class="sub" style="margin:2px 0 0">${esc(s.txt)}</div></div><button class="chk" data-c="${d.id+s.id}" aria-label="Marcar ${esc(s.name)}">${tick2}</button></div></li>`;
-  return`<li><div class="hr">${s.t}<small>${s.te?"até "+s.te:(s.tn||"sugerido")}</small></div><article class="stop${done}">${s.svg?ROUTE:""}${s.ph?`<img class="foto" src="img/${s.ph}.jpg" alt="${esc(s.name)}" loading="lazy">`:""}<div class="top"><h3>${esc(s.name)}<small>${s.th}</small></h3><button class="chk" data-c="${d.id+s.id}" aria-label="Marcar ${esc(s.name)} como visitado">${tick2}</button></div><div class="body"><p style="margin:0">${esc(s.what)}</p>
+  return`<li><div class="hr">${s.t}<small>${s.te?"até "+s.te:(s.tn||"sugerido")}</small></div><article class="stop${done}">${s.svg?ROUTE:""}${s.ph?`<img class="foto" src="img/${s.ph}.jpg" alt="${esc(s.name)}" loading="lazy">`:""}<div class="top"><h3>${esc(s.name)}${s.pend?' <span class="pill s-to" style="vertical-align:middle">A reservar</span>':""}<small>${s.th}</small></h3><button class="chk" data-c="${d.id+s.id}" aria-label="Marcar ${esc(s.name)} como visitado">${tick2}</button></div><div class="body"><p style="margin:0">${esc(s.what)}</p>
 <div class="facts">${s.facts.map(f=>`<div><span>${f[0]}</span><b>${esc(f[1])}</b></div>`).join("")}</div>
 ${s.see?`<b class="disp" style="font-weight:600">${s.seeLabel||"O que conhecer"}</b><ul class="see">${s.see.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""}
 ${s.table?`<div class="ttab"><b class="disp" style="font-weight:600">${esc(s.table.title)}</b><table>${s.table.rows.map(r=>`<tr${s.facts.some(f=>f[1].includes(r[1].replace("h",":").slice(0,5))||f[1].includes(r[1]))?' class="hl"':""}><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table></div>`:""}${s.how?`<p style="margin:10px 0 0"><b class="disp" style="font-weight:600">Como chegar saindo do Wat Pho: </b>${esc(s.how)}</p>`:""}
@@ -461,7 +464,7 @@ const RES=[
  {d:"31",m:"dez",name:"Réveillon CAD 2027 · Lanternas celestes",info:"2 ingressos · reserva GYG996QG9ZL3 · Hualiying Travel",st:"ok",qr:["ingresso-1","ingresso-2"]},
  
  {d:"14",m:"jan",name:"Voos de volta · BKK → KUL → DOH → GRU",info:"MH 781 + MH 164 + 5261 · chegada em SP sex, 15 jan, 16:55",st:"ok",pdf:"voo-tailandia"},
- {d:"2",m:"jan",name:"Hospedagem em Chiang Mai, 2 a 4 jan",info:"Noites de 2 e 3 de janeiro · a definir",st:"def"},
+ {d:"2",m:"jan",name:"Hotel em Chiang Mai, 2 a 4 jan",info:"2 noites · ainda não reservado",st:"to"},
  {d:"4",m:"jan",name:"Saída de Chiang Mai",info:"Transporte e destino seguinte a definir",st:"def"},
  {d:"5",m:"jan",name:"Roteiro de 5 a 14 de janeiro",info:"Hospedagens e passeios a definir",st:"def"}
 ];
