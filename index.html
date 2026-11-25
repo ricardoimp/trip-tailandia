@@ -196,6 +196,23 @@ button.mini{border:0;cursor:pointer}
 .slot em{display:block;font-style:normal;font-size:14px;color:var(--soft);overflow-wrap:anywhere}
 .slot.none b{color:var(--soft);font-weight:500}
 @media(max-width:600px){.slot{grid-template-columns:36px minmax(0,1fr)}.slot .pill{grid-column:2;justify-self:start}}
+.polite{padding:12px 16px;border-radius:14px;background:var(--chip);margin-bottom:14px;font-size:15px}
+#fr-q{margin-bottom:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px}
+.chips button{flex:none;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px Kanit;cursor:pointer}
+.chips button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff6e6}
+.frs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
+.fr{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:grid;gap:6px}
+.fr .pt{font:600 17px Kanit}
+.fr .th{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;background:color-mix(in srgb,var(--goldf) 14%,transparent);border-radius:12px;padding:8px 10px}
+.fr .th b{font:500 22px/1.25 Sarabun;display:block}
+.fr .th i{font-style:normal;font-size:14px;color:var(--soft)}
+.fr .th button{min-height:40px;padding:0 12px;border-radius:999px;border:0;background:var(--red);color:#fff6e6;font:500 13px Kanit;cursor:pointer}
+.fr .ln{display:grid;grid-template-columns:2.2em minmax(0,1fr);font-size:15px}
+.fr .ln span{font:600 12px Kanit;color:var(--gold);padding-top:2px}
+.fr .ct2{font:500 12px Kanit;color:var(--soft)}
+.frempty{color:var(--soft);padding:16px}
+@media(max-width:600px){nav.tabs a{font-size:11px;padding:10px 2px}}
 .pend{border:2px dashed var(--line);border-radius:18px;padding:22px;text-align:center;color:var(--soft)}
 textarea,input{font:16px Sarabun;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%}
 textarea{min-height:96px;resize:vertical}
@@ -302,6 +319,21 @@ label{font:500 14px Kanit;display:block;margin-bottom:6px}
     <div style="margin-top:24px"><a class="btn pri" href="#inicio">← Voltar ao início</a></div>
   </section>
 
+  <section class="view" id="v-idioma">
+    <a class="back" href="#inicio"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Voltar ao início</a>
+    <h2>Idioma</h2>
+    <p class="sub">Frases para cada situação da viagem em português, tailandês, inglês e espanhol. Toque em "Ouvir" para escutar em tailandês.</p>
+    <div class="polite"><b>Regra de ouro:</b> no fim de cada frase em tailandês, o homem diz <b>khráp</b> (ครับ) e a mulher diz <b>khâ</b> (ค่ะ). É o "por favor" que deixa tudo educado. Onde aparece <b>ผม / ฉัน</b>: o homem usa <b>phǒm</b> e a mulher usa <b>chǎn</b>.</div>
+    <input id="fr-q" type="search" placeholder="Buscar frase em qualquer idioma" aria-label="Buscar frase">
+    <div class="chips" id="fr-cats" role="group" aria-label="Categorias"></div>
+    <div class="frs" id="fr-list"></div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="card"><h3 style="font-size:20px;margin-bottom:6px">🇰🇭 No Camboja (khmer)</h3>Olá: <b>chum reap suor</b> (ជំរាបសួរ) · Obrigado: <b>aw kun</b> (អរគុណ). Inglês e dólar americano são bem aceitos em Siem Reap.</div>
+      <div class="card"><h3 style="font-size:20px;margin-bottom:6px">🇸🇬 Em Singapura</h3>Inglês é a língua do dia a dia. Todas as frases em inglês desta página funcionam lá.</div>
+    </div>
+    <div style="margin-top:24px"><a class="btn pri" href="#inicio">← Voltar ao início</a></div>
+  </section>
+
   <section class="view" id="v-info">
     <a class="back" href="#inicio"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Voltar ao início</a>
     <h2>Guia rápido</h2>
@@ -345,6 +377,7 @@ label{font:500 14px Kanit;display:block;margin-bottom:6px}
   <a href="#voos" data-v="voos"><svg viewBox="0 0 24 24"><path d="M2 14l20-6-3 4-8 3-3 5-1-4z"/></svg>Voos</a>
   <a href="#roteiro" data-v="roteiro"><svg viewBox="0 0 24 24"><path d="M12 2l3 6H9z"/><path d="M8 8h8l1 5H7z"/><path d="M5 13h14v8H5z"/></svg>Roteiro</a>
   <a href="#status" data-v="status"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8.5 13l2.5 2.5 4.5-5"/></svg>Status</a>
+  <a href="#idioma" data-v="idioma"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>Idioma</a>
   <a href="#info" data-v="info"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v.5M12 11v6"/></svg>Guia</a>
 </nav>
 
@@ -755,12 +788,125 @@ $("pwf").addEventListener("submit",async e=>{e.preventDefault();const v=$("pwi")
 $("pwx").addEventListener("click",()=>{$("pw").hidden=true});
 $("pw").addEventListener("click",e=>{if(e.target.id==="pw")$("pw").hidden=true});
 $("pwgo").addEventListener("click",()=>{setTimeout(()=>{$("pw").hidden=true},300)});
+const FR=[
+["Básico","Olá / Bom dia","สวัสดี","sa-wàt-dii","Hello / Good morning","Hola / Buenos días"],
+["Básico","Boa noite (ao dormir)","ราตรีสวัสดิ์","raa-trii sa-wàt","Good night","Buenas noches"],
+["Básico","Tchau","ลาก่อน","laa gòn","Goodbye","Adiós"],
+["Básico","Até logo","แล้วพบกันใหม่","láew phóp gan mài","See you later","Hasta luego"],
+["Básico","Obrigado(a)","ขอบคุณ","khòp khun","Thank you","Gracias"],
+["Básico","Muito obrigado(a)","ขอบคุณมาก","khòp khun mâak","Thank you very much","Muchas gracias"],
+["Básico","Com licença / Desculpe","ขอโทษ","khǒr thôot","Excuse me / Sorry","Disculpe / Perdón"],
+["Básico","Sim","ใช่","châi","Yes","Sí"],
+["Básico","Não","ไม่ใช่","mâi châi","No","No"],
+["Básico","Tudo bem?","สบายดีไหม","sa-baai dii mǎi","How are you?","¿Cómo estás?"],
+["Básico","Estou bem","สบายดี","sa-baai dii","I'm fine","Estoy bien"],
+["Básico","Sem problema / Tudo bem","ไม่เป็นไร","mâi pen rai","No problem","No hay problema"],
+["Básico","Meu nome é...","ผม / ฉัน ชื่อ...","phǒm / chǎn chûe...","My name is...","Me llamo..."],
+["Básico","Somos do Brasil","เรามาจากบราซิล","rao maa jàak Braa-sin","We are from Brazil","Somos de Brasil"],
+["Conversa","Você fala inglês?","คุณพูดภาษาอังกฤษได้ไหม","khun phûut phaa-sǎa ang-grìt dâi mǎi","Do you speak English?","¿Habla inglés?"],
+["Conversa","Não entendo","ไม่เข้าใจ","mâi khâo jai","I don't understand","No entiendo"],
+["Conversa","Entendi","เข้าใจแล้ว","khâo jai láew","I understand","Entiendo"],
+["Conversa","Pode falar mais devagar?","พูดช้าๆ หน่อยได้ไหม","phûut cháa cháa nòi dâi mǎi","Can you speak more slowly?","¿Puede hablar más despacio?"],
+["Conversa","Pode repetir?","พูดอีกครั้งได้ไหม","phûut ìik khráng dâi mǎi","Can you repeat?","¿Puede repetir?"],
+["Conversa","Pode escrever?","เขียนให้หน่อยได้ไหม","khǐan hâi nòi dâi mǎi","Can you write it down?","¿Puede escribirlo?"],
+["Conversa","Pode tirar uma foto nossa?","ช่วยถ่ายรูปให้หน่อยได้ไหม","chûai thàai rûup hâi nòi dâi mǎi","Can you take a photo of us?","¿Nos puede tomar una foto?"],
+["Conversa","Lindo!","สวยมาก","sǔai mâak","Beautiful!","¡Precioso!"],
+["Direções","Onde fica...?","...อยู่ที่ไหน","... yùu thîi nǎi","Where is...?","¿Dónde está...?"],
+["Direções","Onde é o banheiro?","ห้องน้ำอยู่ที่ไหน","hông náam yùu thîi nǎi","Where is the bathroom?","¿Dónde está el baño?"],
+["Direções","Como chego a...?","ไป...ยังไง","pai ... yang ngai","How do I get to...?","¿Cómo llego a...?"],
+["Direções","É longe?","ไกลไหม","glai mǎi","Is it far?","¿Está lejos?"],
+["Direções","É perto?","ใกล้ไหม","glâi mǎi","Is it near?","¿Está cerca?"],
+["Direções","Dá para ir a pé?","เดินไปได้ไหม","doen pai dâi mǎi","Can I walk there?","¿Se puede ir caminando?"],
+["Direções","Vire à esquerda","เลี้ยวซ้าย","líao sáai","Turn left","Gire a la izquierda"],
+["Direções","Vire à direita","เลี้ยวขวา","líao khwǎa","Turn right","Gire a la derecha"],
+["Direções","Siga em frente","ตรงไป","trong pai","Go straight","Siga recto"],
+["Direções","Estou perdido(a)","หลงทาง","lǒng thaang","I'm lost","Estoy perdido(a)"],
+["Direções","Pode me mostrar no mapa?","ช่วยชี้ในแผนที่หน่อย","chûai chíi nai phǎen-thîi nòi","Can you show me on the map?","¿Me lo muestra en el mapa?"],
+["Transporte","Leve-me a este endereço","ไปที่นี่","pai thîi nîi","Take me to this address","Lléveme a esta dirección"],
+["Transporte","Quanto custa até...?","ไป...เท่าไหร่","pai ... thâo rài","How much to...?","¿Cuánto cuesta hasta...?"],
+["Transporte","Pode ligar o taxímetro?","เปิดมิเตอร์ได้ไหม","pòet mí-dtôe dâi mǎi","Can you turn on the meter?","¿Puede poner el taxímetro?"],
+["Transporte","Pare aqui, por favor","จอดที่นี่","jòt thîi nîi","Stop here, please","Pare aquí, por favor"],
+["Transporte","Mais devagar, por favor","ขับช้าๆ หน่อย","khàp cháa cháa nòi","Slower, please","Más despacio, por favor"],
+["Transporte","A que horas sai o barco?","เรือออกกี่โมง","ruea òk gìi moong","What time does the boat leave?","¿A qué hora sale el barco?"],
+["Transporte","Uma passagem para...","ขอตั๋วไป...หนึ่งใบ","khǒr dtǔa pai ... nùeng bai","One ticket to...","Un billete a..."],
+["Transporte","Aeroporto","สนามบิน","sa-nǎam bin","Airport","Aeropuerto"],
+["Transporte","Píer / Porto","ท่าเรือ","thâa ruea","Pier","Muelle"],
+["Transporte","Estação de trem","สถานีรถไฟ","sa-thǎa-nii rót fai","Train station","Estación de tren"],
+["Hotel","Tenho uma reserva","ผม / ฉัน จองห้องไว้","phǒm / chǎn jong hông wái","I have a reservation","Tengo una reserva"],
+["Hotel","A que horas é o café da manhã?","อาหารเช้ากี่โมง","aa-hǎan cháao gìi moong","What time is breakfast?","¿A qué hora es el desayuno?"],
+["Hotel","Qual a senha do Wi-Fi?","รหัสไวไฟคืออะไร","ra-hàt wai-fai khue a-rai","What is the Wi-Fi password?","¿Cuál es la contraseña del wifi?"],
+["Hotel","Pode guardar nossas malas?","ฝากกระเป๋าได้ไหม","fàak gra-pǎo dâi mǎi","Can you keep our bags?","¿Puede guardar nuestras maletas?"],
+["Hotel","O ar-condicionado não funciona","แอร์เสีย","ae sǐa","The air conditioning is broken","El aire acondicionado no funciona"],
+["Hotel","Mais toalhas, por favor","ขอผ้าเช็ดตัวเพิ่ม","khǒr phâa chét tua phôem","More towels, please","Más toallas, por favor"],
+["Hotel","Pode chamar um táxi?","ช่วยเรียกแท็กซี่ให้หน่อย","chûai rîak tháek-sîi hâi nòi","Can you call a taxi?","¿Puede llamar un taxi?"],
+["Restaurante","Mesa para dois","โต๊ะสำหรับสองคน","dtó sǎm-ràp sǒng khon","Table for two","Mesa para dos"],
+["Restaurante","O cardápio, por favor","ขอเมนูหน่อย","khǒr mee-nuu nòi","The menu, please","La carta, por favor"],
+["Restaurante","A conta, por favor","เช็คบิลด้วย","chék bin dûai","The bill, please","La cuenta, por favor"],
+["Restaurante","Não apimentado","ไม่เผ็ด","mâi phèt","Not spicy","Sin picante"],
+["Restaurante","Pouco apimentado","เผ็ดนิดหน่อย","phèt nít nòi","A little spicy","Un poco picante"],
+["Restaurante","Água sem gás","น้ำเปล่า","náam plàao","Still water","Agua sin gas"],
+["Restaurante","Sem gelo","ไม่ใส่น้ำแข็ง","mâi sài náam khǎeng","No ice","Sin hielo"],
+["Restaurante","Sem açúcar","ไม่ใส่น้ำตาล","mâi sài náam taan","No sugar","Sin azúcar"],
+["Restaurante","Uma cerveja","เบียร์หนึ่งขวด","bia nùeng khùat","One beer","Una cerveza"],
+["Restaurante","Café","กาแฟ","gaa-fae","Coffee","Café"],
+["Restaurante","Sou vegetariano(a)","ผม / ฉัน กินมังสวิรัติ","phǒm / chǎn gin mang-sa-wí-rát","I'm vegetarian","Soy vegetariano(a)"],
+["Restaurante","Sou alérgico(a) a amendoim","ผม / ฉัน แพ้ถั่วลิสง","phǒm / chǎn pháe thùa lí-sǒng","I'm allergic to peanuts","Soy alérgico(a) al cacahuete"],
+["Restaurante","Sou alérgico(a) a frutos do mar","ผม / ฉัน แพ้อาหารทะเล","phǒm / chǎn pháe aa-hǎan tha-lee","I'm allergic to seafood","Soy alérgico(a) al marisco"],
+["Restaurante","Para viagem","กลับบ้าน","glàp bâan","To go","Para llevar"],
+["Restaurante","Delicioso!","อร่อยมาก","a-ròi mâak","Delicious!","¡Delicioso!"],
+["Compras","Quanto custa?","เท่าไหร่","thâo rài","How much is it?","¿Cuánto cuesta?"],
+["Compras","Muito caro","แพงไป","phaeng pai","Too expensive","Muy caro"],
+["Compras","Pode dar um desconto?","ลดได้ไหม","lót dâi mǎi","Can you give a discount?","¿Me hace un descuento?"],
+["Compras","Qual o último preço?","ราคาสุดท้ายเท่าไหร่","raa-khaa sùt tháai thâo rài","What's your best price?","¿Cuál es el último precio?"],
+["Compras","Só estou olhando","ดูเฉยๆ","duu chǒei chǒei","Just looking","Solo estoy mirando"],
+["Compras","Aceita cartão?","รับบัตรเครดิตไหม","ráp bàt khree-dìt mǎi","Do you accept cards?","¿Acepta tarjeta?"],
+["Compras","Tem outro tamanho?","มีไซส์อื่นไหม","mii sai ùen mǎi","Do you have another size?","¿Tiene otra talla?"],
+["Compras","Tem outra cor?","มีสีอื่นไหม","mii sǐi ùen mǎi","Do you have another color?","¿Tiene otro color?"],
+["Compras","Posso provar?","ลองได้ไหม","long dâi mǎi","Can I try it on?","¿Puedo probármelo?"],
+["Compras","Vou levar este","เอาอันนี้","ao an níi","I'll take this one","Me llevo este"],
+["Templos","Posso tirar foto?","ถ่ายรูปได้ไหม","thàai rûup dâi mǎi","Can I take photos?","¿Puedo sacar fotos?"],
+["Templos","Onde tiro os sapatos?","ถอดรองเท้าที่ไหน","thòt rong-tháao thîi nǎi","Where do I take off my shoes?","¿Dónde me quito los zapatos?"],
+["Templos","Quanto é a entrada?","ค่าเข้าเท่าไหร่","khâa khâo thâo rài","How much is the entrance?","¿Cuánto cuesta la entrada?"],
+["Templos","Que horas abre e fecha?","เปิดกี่โมงถึงกี่โมง","pòet gìi moong thǔeng gìi moong","What are the opening hours?","¿A qué hora abre y cierra?"],
+["Tempo","Que horas são?","กี่โมงแล้ว","gìi moong láew","What time is it?","¿Qué hora es?"],
+["Tempo","Hoje","วันนี้","wan níi","Today","Hoy"],
+["Tempo","Amanhã","พรุ่งนี้","phrûng níi","Tomorrow","Mañana"],
+["Tempo","Ontem","เมื่อวาน","mûea waan","Yesterday","Ayer"],
+["Emergência","Socorro!","ช่วยด้วย","chûai dûai","Help!","¡Socorro!"],
+["Emergência","Chame a polícia","เรียกตำรวจ","rîak dtam-rùat","Call the police","Llame a la policía"],
+["Emergência","Chame uma ambulância","เรียกรถพยาบาล","rîak rót pha-yaa-baan","Call an ambulance","Llame a una ambulancia"],
+["Emergência","Preciso de um médico","ต้องการหมอ","dtông gaan mǒr","I need a doctor","Necesito un médico"],
+["Emergência","Estou passando mal","ไม่สบาย","mâi sa-baai","I feel sick","Me siento mal"],
+["Emergência","Dói aqui","เจ็บตรงนี้","jèp trong níi","It hurts here","Me duele aquí"],
+["Emergência","Onde tem uma farmácia?","ร้านขายยาอยู่ที่ไหน","ráan khǎai yaa yùu thîi nǎi","Where is a pharmacy?","¿Dónde hay una farmacia?"],
+["Emergência","Hospital","โรงพยาบาล","roong pha-yaa-baan","Hospital","Hospital"],
+["Emergência","Perdi meu passaporte","ทำหนังสือเดินทางหาย","tham nǎng-sǔe doen-thaang hǎai","I lost my passport","Perdí mi pasaporte"],
+["Emergência","Roubaram minha bolsa","กระเป๋าถูกขโมย","gra-pǎo thùuk kha-mooi","My bag was stolen","Me robaron el bolso"],
+["Números","1 · 2 · 3","หนึ่ง · สอง · สาม","nùeng · sǒng · sǎam","one · two · three","uno · dos · tres"],
+["Números","4 · 5 · 6","สี่ · ห้า · หก","sìi · hâa · hòk","four · five · six","cuatro · cinco · seis"],
+["Números","7 · 8 · 9 · 10","เจ็ด · แปด · เก้า · สิบ","jèt · pàet · gâo · sìp","seven · eight · nine · ten","siete · ocho · nueve · diez"],
+["Números","20 · 50 · 100","ยี่สิบ · ห้าสิบ · หนึ่งร้อย","yîi-sìp · hâa-sìp · nùeng rói","twenty · fifty · one hundred","veinte · cincuenta · cien"],
+["Números","500 · 1.000","ห้าร้อย · หนึ่งพัน","hâa rói · nùeng phan","five hundred · one thousand","quinientos · mil"]
+];
+
+let frCat="Todas";
+const frCats=["Todas",...new Set(FR.map(f=>f[0]))];
+const norm=t=>t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const renderFr=()=>{const q=norm($("fr-q").value.trim());
+ $("fr-cats").innerHTML=frCats.map(c=>`<button type="button" data-c="${c}" aria-pressed="${c===frCat}">${c}</button>`).join("");
+ const L=FR.map((f,i)=>[f,i]).filter(([f])=>(frCat==="Todas"||f[0]===frCat)&&(!q||norm(f.slice(1).join(" ")).includes(q)));
+ $("fr-list").innerHTML=L.length?L.map(([f,i])=>`<div class="fr"><span class="ct2">${esc(f[0])}</span><div class="pt">${esc(f[1])}</div><div class="th"><div><b lang="th">${esc(f[2])}</b><i>${esc(f[3])}</i></div><button type="button" data-say="${i}">Ouvir</button></div><div class="ln"><span>EN</span><div>${esc(f[4])}</div></div><div class="ln"><span>ES</span><div>${esc(f[5])}</div></div></div>`).join(""):`<div class="frempty">Nenhuma frase encontrada.</div>`};
+$("fr-cats").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;frCat=b.dataset.c;renderFr()});
+$("fr-q").addEventListener("input",renderFr);
+$("fr-list").addEventListener("click",e=>{const b=e.target.closest("[data-say]");if(!b)return;
+ try{const u=new SpeechSynthesisUtterance(FR[+b.dataset.say][2].replace(/\.\.\./g," "));u.lang="th-TH";u.rate=.85;const v=speechSynthesis.getVoices().find(v=>/^th/i.test(v.lang));if(v)u.voice=v;speechSynthesis.cancel();speechSynthesis.speak(u);b.textContent="Tocando";setTimeout(()=>b.textContent="Ouvir",1500)}catch(er){b.textContent="Sem áudio";setTimeout(()=>b.textContent="Ouvir",1500)}});
+renderFr();
 /* conversor */
 const conv=()=>{const v=parseFloat($("thb").value)||0,r=parseFloat($("rate").value)||0;$("brl").textContent=(v*r).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});store.set("tl-rate",$("rate").value)};
 $("rate").value=store.get("tl-rate","0.165");$("thb").addEventListener("input",conv);$("rate").addEventListener("input",conv);conv();
 
 /* rotas */
-const views=["inicio","voos","roteiro","status","info"];
+const views=["inicio","voos","roteiro","status","idioma","info"];
 const route=()=>{let v=location.hash.slice(1);if(!views.includes(v))v="inicio";views.forEach(x=>$("v-"+x).classList.toggle("on",x===v));document.querySelectorAll("nav.tabs a").forEach(a=>a.dataset.v===v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"))};
 try{history.scrollRestoration="manual"}catch(e){}
 const toTop=()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0};
