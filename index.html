@@ -152,6 +152,9 @@ h2{font-size:clamp(28px,4.4vw,38px);font-weight:600;margin-bottom:6px}
 .pwbox h3{font-size:24px;margin-bottom:6px}
 .pwbox p{margin:0 0 12px;color:var(--soft)}
 .pwbox p.err{color:var(--red);font-weight:600}
+#pwimg{display:block;width:100%;border-radius:14px;margin-top:6px;background:#fff}
+#pwimg[hidden]{display:none}
+.pwbox{max-height:92vh;overflow:auto}
 #pwgo{margin-top:10px;width:100%;justify-content:center}
 button.doc{width:100%;text-align:left;font:inherit;cursor:pointer}
 button.mini{border:0;cursor:pointer}
@@ -294,7 +297,7 @@ label{font:500 14px Kanit;display:block;margin-bottom:6px}
   </section>
 </main>
 
-<div class="pw" id="pw" hidden><form class="pwbox" id="pwf"><h3>Voucher protegido</h3><p id="pwmsg">Digite a senha para abrir o PDF.</p><input id="pwi" type="password" autocomplete="current-password" placeholder="Senha"><div class="acts"><button type="submit" class="btn pri" id="pwok">Liberar</button><button type="button" class="btn" id="pwx">Cancelar</button></div><a class="btn pri" id="pwgo" target="_blank" rel="noopener" hidden>Abrir voucher (PDF)</a></form></div>
+<div class="pw" id="pw" hidden><form class="pwbox" id="pwf"><h3>Documento protegido</h3><p id="pwmsg">Digite a senha para abrir o PDF.</p><input id="pwi" type="password" autocomplete="current-password" placeholder="Senha"><div class="acts"><button type="submit" class="btn pri" id="pwok">Liberar</button><button type="button" class="btn" id="pwx">Cancelar</button></div><img id="pwimg" alt="Ingresso com QR code" hidden><a class="btn pri" id="pwgo" target="_blank" rel="noopener" hidden>Abrir voucher (PDF)</a></form></div>
 <nav class="tabs" aria-label="Seções">
   <a href="#inicio" data-v="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Início</a>
   <a href="#voos" data-v="voos"><svg viewBox="0 0 24 24"><path d="M2 14l20-6-3 4-8 3-3 5-1-4z"/></svg>Voos</a>
@@ -377,7 +380,7 @@ const DAYS=[
   {id:"anonovo",t:"17:00",tn:"até 0h25",ph:"lanternas",name:"Réveillon CAD 2027 · Lanternas celestes",th:"ปีใหม่ 2027",what:"Contagem regressiva oficial de Ano Novo de Chiang Mai, com soltura de lanternas dos desejos, apresentações da cultura Lanna e grande show de fogos de artifício.",
    facts:[["Ponto de encontro","Aeroporto Central de Chiang Mai, em frente ao estacionamento do Go Wholesale"],["Chegada","Entre 17h e 18h"],["Ingressos","2 adultos · (2027) Bilhete padrão"],["Reserva","GYG996QG9ZL3"],["Operadora","Hualiying Travel"],["Fogos","0h–0h25"]],
    table:{title:"Programação",rows:[["Encontro e partida","17h–18h"],["Credenciamento, Vila CAD e Mercado Antigo de Lanna","18h"],["Área de jantar e jogos","19h"],["Área do Pagode: música e shows","21h"],["O Espírito de Lanna: Fé Sem Limites","22h30"],["Orquestra Lanna","23h"],["Soltura da lanterna dos desejos","23h45"],["Grande espetáculo de fogos","0h–0h25"]]},
-   tip:"O e-ticket chegou pela Hualiying Travel no app da reserva. Deixar salvo no celular antes de sair do hotel.",map:"Chiang Mai International Airport"}
+   tip:"Os QR codes dos 2 ingressos estão nos botões abaixo (senha do app). Também ficam disponíveis offline no app da GetYourGuide.",map:"Chiang Mai International Airport",links:[["Ingresso 1 (QR)","pdf:ingresso-1"],["Ingresso 2 (QR)","pdf:ingresso-2"]]}
  ],note:"A virada para 2027 em Chiang Mai, a cidade das lanternas."},
  {id:"d01",wd:"Sex",d:"1",m:"jan",title:"A definir",theme:"Chiang Mai",stops:[]},
  {id:"d02",wd:"Sáb",d:"2",m:"jan",title:"Chiang Mai",theme:"Check-out do Lanna Oriental",stops:[
@@ -453,7 +456,7 @@ const RES=[
  {d:"29",m:"dez",name:"Rajadamnern Stadium",info:"Confirmar visitação ou luta na data",st:"def"},
  {d:"31",m:"dez",name:"Voo Bangkok → Chiang Mai",info:"Thai AirAsia FD 3447 · DMK 11:30 → CNX 12:40 · reserva CIU2WX",st:"ok",pdf:"voo-chiang-mai"},
  {d:"31",m:"dez",name:"Lanna Oriental Hotel · Chiang Mai",info:"31 dez a 2 jan · café incluído · Hoteis.com 72081032660989 · cancelamento grátis até 17 dez",st:"ok",pdf:"hospedagem-chiang-mai"},
- {d:"31",m:"dez",name:"Réveillon CAD 2027 · Lanternas celestes",info:"2 ingressos · reserva GYG996QG9ZL3 · Hualiying Travel",st:"ok"},
+ {d:"31",m:"dez",name:"Réveillon CAD 2027 · Lanternas celestes",info:"2 ingressos · reserva GYG996QG9ZL3 · Hualiying Travel",st:"ok",qr:["ingresso-1","ingresso-2"]},
  
  {d:"14",m:"jan",name:"Voos de volta · BKK → KUL → DOH → GRU",info:"MH 781 + MH 164 + 5261 · chegada em SP sex, 15 jan, 16:55",st:"ok",pdf:"voo-tailandia"},
  {d:"3",m:"jan",name:"Roteiro de 3 a 14 de janeiro",info:"Hospedagens e passeios a definir",st:"def"}
@@ -466,7 +469,7 @@ const renderStatus=()=>{
  const pct=Math.round(c.ok/RES.length*100);
  let bar=document.getElementById("st-bar");if(!bar){bar=document.createElement("div");bar.className="bar";bar.id="st-bar";bar.innerHTML="<i></i>";$("st-sum").after(bar)}
  bar.firstChild.style.width=pct+"%";bar.title=pct+"% reservado";
- $("st-res").innerHTML=RES.map(r=>`<div class="ri"><div class="dt"><b>${esc(r.d)}</b>${esc(r.m)}</div><div><h4>${esc(r.name)}</h4><p>${esc(r.info)}</p>${r.pdf?`<button type="button" class="mini" data-pdf="${r.pdf}">Baixar voucher (PDF)</button>`:""}</div><span class="pill ${ST[r.st][1]}">${ST[r.st][0]}</span></div>`).join("");
+ $("st-res").innerHTML=RES.map(r=>`<div class="ri"><div class="dt"><b>${esc(r.d)}</b>${esc(r.m)}</div><div><h4>${esc(r.name)}</h4><p>${esc(r.info)}</p>${r.pdf?`<button type="button" class="mini" data-pdf="${r.pdf}">Baixar voucher (PDF)</button>`:""}${(r.qr||[]).map((q,i)=>` <button type="button" class="mini" data-pdf="${q}">Ingresso ${i+1} (QR)</button>`).join("")}</div><span class="pill ${ST[r.st][1]}">${ST[r.st][0]}</span></div>`).join("");
  $("st-days").innerHTML=DAYS.map(d=>{const n=d.stops.length,k=d.stops.filter(x=>checks[d.id+x.id]).length;
   return`<a class="sd" href="#roteiro" data-go="${d.id}"><div class="h"><b>${d.wd}, ${d.d} ${d.m||"dez"} · ${esc(d.title)}</b>${n?`<span>${k}/${n} feitos</span>`:""}</div>${n?`<ul>${d.stops.map(x=>`<li class="${checks[d.id+x.id]?"ok":""}"><em>${esc(x.t)}</em><span>${esc(x.name)}</span></li>`).join("")}</ul>`:`<div class="empty">Roteiro ainda não definido</div>`}</a>`}).join("");
 };
@@ -477,8 +480,9 @@ const PWCHECK="9377f0f3799c585ad3ef6a92594598acc8fc390f6e77428b8594d9963c6e58b8"
 const sha=async t=>[...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)))].map(b=>b.toString(16).padStart(2,"0")).join("");
 let pwOk=null,pwDoc="";try{pwOk=sessionStorage.getItem("tl-pw")}catch(e){}
 const pwShow=async()=>{const go=$("pwgo");$("pw").hidden=false;
- if(pwOk){go.href="docs/"+(await sha(pwOk+":"+pwDoc)).slice(0,24)+".pdf";go.hidden=false;$("pwi").hidden=true;$("pwok").hidden=true;$("pwmsg").className="";$("pwmsg").textContent="Senha confirmada. Toque para abrir."}
- else{go.hidden=true;$("pwi").hidden=false;$("pwok").hidden=false;$("pwi").value="";$("pwmsg").className="";$("pwmsg").textContent="Digite a senha para abrir o PDF.";$("pwi").focus()}};
+ const img=pwDoc.startsWith("ingresso");
+ if(pwOk){const url="docs/"+(await sha(pwOk+":"+pwDoc)).slice(0,24)+(img?".jpg":".pdf");go.href=url;go.hidden=false;go.textContent=img?"Abrir em tela cheia":"Abrir voucher (PDF)";$("pwimg").hidden=!img;if(img)$("pwimg").src=url;$("pwi").hidden=true;$("pwok").hidden=true;$("pwmsg").className="";$("pwmsg").textContent=img?"Mostre este QR code na entrada.":"Senha confirmada. Toque para abrir."}
+ else{go.hidden=true;$("pwimg").hidden=true;$("pwi").hidden=false;$("pwok").hidden=false;$("pwi").value="";$("pwmsg").className="";$("pwmsg").textContent="Digite a senha para abrir o documento.";$("pwi").focus()}};
 document.addEventListener("click",e=>{const b=e.target.closest("[data-pdf]");if(!b)return;e.preventDefault();pwDoc=b.dataset.pdf;pwShow()});
 $("pwf").addEventListener("submit",async e=>{e.preventDefault();const v=$("pwi").value.trim();
  if(await sha("check:"+v)===PWCHECK){pwOk=v;try{sessionStorage.setItem("tl-pw",v)}catch(er){}pwShow()}
