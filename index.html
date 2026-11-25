@@ -85,6 +85,11 @@ h2{font-size:clamp(28px,4.4vw,38px);font-weight:600;margin-bottom:6px}
 .pnr span{grid-column:1;font-size:13px;color:#f4d9c2}
 .pnr b{grid-column:1;font:700 clamp(24px,5vw,30px)/1.1 Kanit;color:var(--goldf);letter-spacing:.04em;white-space:nowrap}
 .pnr .btn{grid-column:2;grid-row:1/3;background:transparent;color:#fff6e6;border-color:rgba(255,246,230,.5)}
+.doc{display:flex;align-items:center;gap:14px;background:var(--card);border:2px solid var(--gold);border-radius:18px;padding:14px 16px;margin-bottom:12px;text-decoration:none;color:var(--ink);min-height:64px}
+.doc svg{width:34px;height:34px;flex:none;stroke:var(--red);fill:none;stroke-width:1.8}
+.doc b{display:block;font:600 18px Kanit}
+.doc small{color:var(--soft);font-size:14px}
+.bag{padding:12px 16px;border-radius:14px;background:var(--chip);margin-bottom:22px;font-size:15px}
 .lay{display:flex;gap:12px;align-items:center;margin:0 0 14px;padding:12px 16px;border-radius:14px;background:var(--chip);color:var(--ink)}
 .lay b{font-family:Kanit;font-weight:600}
 /* days */
@@ -140,6 +145,7 @@ h2{font-size:clamp(28px,4.4vw,38px);font-weight:600;margin-bottom:6px}
 .ri .dt b{display:block;font-size:22px;color:var(--ink)}
 .ri h4{margin:0;font:600 17px/1.2 Kanit}
 .ri p{margin:2px 0 0;font-size:14px;color:var(--soft);overflow-wrap:anywhere}
+.mini{display:inline-flex;align-items:center;min-height:36px;margin-top:6px;padding:0 12px;border-radius:999px;background:var(--chip);color:var(--red);font:600 13px Kanit;text-decoration:none}
 .pill{font:600 12px Kanit;padding:4px 10px;border-radius:999px;color:#fff;white-space:nowrap}
 .sd{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:10px;color:var(--ink);text-decoration:none}
 .sd .h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
@@ -185,14 +191,14 @@ label{font:500 14px Kanit;display:block;margin-bottom:6px}
     <p class="sub">Tudo o que já está definido, num só lugar. Vamos completando juntos.</p>
     <div class="stats">
       <div class="card stat"><b>26 dez</b><span>Embarque em Guarulhos</span></div>
-      <div class="card stat"><b>23h37</b><span>Porta a porta até Bangkok</span></div>
+      <div class="card stat"><b>23h35</b><span>Porta a porta até Bangkok</span></div>
       <div class="card stat"><b>+10h</b><span>Bangkok à frente de SP</span></div>
       <div class="card stat"><b>27 a 30</b><span>Dias em Bangkok</span></div>
     </div>
     <div class="grid2">
       <div class="card">
         <span class="tag">Próximo passo</span>
-        <h3 style="font-size:22px">Voo QR 5262 · GRU → DOH</h3>
+        <h3 style="font-size:22px">Voo 5262 · GRU → DOH</h3>
         <p class="sub" style="margin:6px 0 12px">Sábado, 26 dez 2026, 02:10. Chegar a Guarulhos por volta das 23:00 de sexta.</p>
         <a class="btn pri" href="#voos">Ver voos</a>
       </div>
@@ -207,13 +213,23 @@ label{font:500 14px Kanit;display:block;margin-bottom:6px}
 
   <section class="view" id="v-voos">
     <a class="back" href="#inicio"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Voltar ao início</a>
-    <h2>Voos de ida</h2>
-    <p class="sub">Qatar Airways · horários sempre na hora local de cada cidade.</p>
+    <h2>Voos</h2>
+    <p class="sub">Reserva Decolar · horários sempre na hora local de cada cidade.</p>
     <div class="pnr">
-      <div><span>Código da reserva</span><b id="pnr-code">QPVOUT</b><button class="btn" data-copy="pnr-code">Copiar</button></div>
-      <div><span>Nº da reserva</span><b id="pnr-no">589924364800</b><button class="btn" data-copy="pnr-no">Copiar</button></div>
+      <div><span>Nº da reserva Decolar</span><b id="pnr-no">589924364800</b><button class="btn" data-copy="pnr-no">Copiar</button></div>
+      <div><span>Web check-in Qatar (5262 e 5261)</span><b id="pnr-code">QPVOUT</b><button class="btn" data-copy="pnr-code">Copiar</button></div>
+      <div><span>Web check-in Qatar 828 e Malaysia</span><b id="pnr-code2">B8EU6Y</b><button class="btn" data-copy="pnr-code2">Copiar</button></div>
     </div>
+    <a class="doc" href="docs/voo-tailandia.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/><path d="M12 11v7M9 15l3 3 3-3"/></svg><span><b>Voucher dos voos (PDF)</b><small>Ida e volta · abrir ou baixar</small></span></a>
+    <div class="bag"><b>Bagagem:</b> inclui mochila ou bolsa e bagagem de mão. <b>Não inclui bagagem despachada.</b></div>
+    <h3 class="sh">Ida · 26 e 27 de dezembro</h3>
     <div id="flights"></div>
+    <h3 class="sh">Voo interno · 31 de dezembro</h3>
+    <div id="flights-int"></div>
+    <div class="bag"><b>Bagagem Thai AirAsia:</b> 2 itens pessoais, 2 malas de mão de até <b>5 kg</b> cada (23 × 36 × 56 cm) e 1 mala despachada de até 15 kg. Passagem flexível: troca até 24h antes, pagando só a diferença.<br><a class="mini" href="docs/voo-chiang-mai.pdf" target="_blank" rel="noopener">Baixar voucher (PDF)</a></div>
+    <h3 class="sh">Volta · 14 e 15 de janeiro</h3>
+    <div id="flights-back"></div>
+    <p class="note">Passagem não reembolsável. Alteração: multa de R$ 1.909,08 por passageiro, mais a diferença de tarifa.</p>
   
     <div style="margin-top:24px"><a class="btn pri" href="#inicio">← Voltar ao início</a></div>
   </section>
@@ -279,14 +295,27 @@ label{font:500 14px Kanit;display:block;margin-bottom:6px}
 
 <script>
 {
-const FLIGHTS=[
- {no:"QR 5262",from:"GRU",fromN:"São Paulo · Guarulhos",to:"DOH",toN:"Doha · Hamad",dep:"02:10",depD:"Sáb, 26 dez",arr:"≈ 21:55",arrD:"Sáb, 26 dez",dur:"13h30"},
- {no:"QR 828",from:"DOH",fromN:"Doha · Hamad",to:"BKK",toN:"Bangkok · Suvarnabhumi",dep:"01:30",depD:"Dom, 27 dez",arr:"11:47",arrD:"Dom, 27 dez",dur:"6h15"}
+const IDA=[
+ {no:"5262",air:"LATAM · operado pela Qatar",from:"GRU",fromN:"São Paulo · Guarulhos",to:"DOH",toN:"Doha · Hamad",dep:"02:10",depD:"Sáb, 26 dez",arr:"21:40",arrD:"Sáb, 26 dez",dur:"13h30",ck:"QPVOUT"},
+ "3h50 de conexão em Doha, com troca de avião.",
+ {no:"QR 828",air:"Qatar Airways",from:"DOH",fromN:"Doha · Hamad",to:"BKK",toN:"Bangkok · Suvarnabhumi",dep:"01:30",depD:"Dom, 27 dez",arr:"11:45",arrD:"Dom, 27 dez",dur:"6h15",ck:"B8EU6Y"}
+];
+const INT=[
+ {no:"FD 3447",air:"Thai AirAsia",from:"DMK",fromN:"Bangkok · Don Mueang",to:"CNX",toN:"Chiang Mai",dep:"11:30",depD:"Qui, 31 dez",arr:"12:40",arrD:"Qui, 31 dez",dur:"1h10",ck:"CIU2WX"}
+];
+const VOLTA=[
+ {no:"MH 781",air:"Malaysia Airlines",from:"BKK",fromN:"Bangkok · Suvarnabhumi",to:"KUL",toN:"Kuala Lumpur · KLIA",dep:"20:05",depD:"Qui, 14 jan",arr:"23:25",arrD:"Qui, 14 jan",dur:"2h20",ck:"B8EU6Y"},
+ "3h05 de conexão em Kuala Lumpur, com troca de avião.",
+ {no:"MH 164",air:"Malaysia Airlines",from:"KUL",fromN:"Kuala Lumpur · KLIA",to:"DOH",toN:"Doha · Hamad",dep:"02:30",depD:"Sex, 15 jan",arr:"05:15",arrD:"Sex, 15 jan",dur:"7h45",ck:"B8EU6Y"},
+ "2h35 de conexão em Doha, com troca de avião.",
+ {no:"5261",air:"LATAM · operado pela Qatar",from:"DOH",fromN:"Doha · Hamad",to:"GRU",toN:"São Paulo · Guarulhos",dep:"07:50",depD:"Sex, 15 jan",arr:"16:55",arrD:"Sex, 15 jan",dur:"15h05",ck:"QPVOUT"}
 ];
 const DAYS=[
  {id:"d27",wd:"Dom",d:"27",title:"Templos e Chinatown",theme:"Cultura, arquitetura e gastronomia",stops:[
-  {id:"arr",t:"11:47",k:"simple",name:"Chegada em Bangkok",txt:"Pouso no aeroporto Suvarnabhumi, imigração e bagagens."},
-  {id:"hotel",t:"13:00",k:"simple",name:"Hotel",txt:"Deixar as malas, descansar um pouco, tomar banho e sair para a cidade."},
+  {id:"arr",t:"11:45",k:"simple",name:"Chegada em Bangkok",txt:"Pouso no aeroporto Suvarnabhumi, imigração e bagagens."},
+  {id:"hotel",t:"13:00",tn:"check-in 14h",name:"Novotel Bangkok Bangna",th:"โนโวเทล กรุงเทพ บางนา",what:"Nossa base em Bangkok por 4 noites. Deixar as malas, descansar um pouco, tomar banho e sair para a cidade.",
+   facts:[["Endereço","333 Srinakarin Road, Nongbon, Pravet, Bangkok 10250"],["Check-in","Dom, 27 dez · a partir das 14h, sem horário limite"],["Check-out","Qui, 31 dez · meio-dia"],["Quarto","Standard · 1 cama Queen · não fumante"],["Reservado para","Ricardo Impellizieri · 2 adultos"],["Itinerário Hoteis.com","72081555904942"],["Valor","R$ 1.194,57 pago"],["Cancelamento","Não reembolsável"]],
+   tip:"O hotel fica em Bang Na, na zona leste, a cerca de 25 km dos templos e de Chinatown (uns 45 min a 1h de carro, conforme o trânsito). Fica perto do aeroporto Suvarnabhumi, onde chegamos.",map:"Novotel Bangkok Bangna",links:[["Baixar voucher (PDF)","docs/hospedagem-bangkok.pdf"]]},
   {id:"watpho",t:"14:30",ph:"watpho1",name:"Wat Pho",th:"วัดโพธิ์",what:"Um dos templos budistas mais importantes de Bangkok, famoso pelo gigantesco Buda Reclinado, com aproximadamente 46 metros de comprimento.",
    facts:[["Localização","2 Sanam Chai Road, Phra Nakhon"],["Horário","Diariamente, 8h às 19h30"],["Entrada","≈ 300 THB por adulto estrangeiro"],["Tempo de visita","1h30 a 2h"],["Melhor horário","8h às 10h, antes do calor e das excursões"]],
    see:["O impressionante Buda Reclinado","Os templos e pagodes decorados","Os jardins e pátios tradicionais","A arquitetura religiosa tailandesa"],
@@ -328,12 +357,13 @@ const DAYS=[
  ]},
  {id:"d30",wd:"Qua",d:"30",title:"A definir",stops:[]},
  {id:"d31",wd:"Qui",d:"31",title:"Rumo a Chiang Mai e Ano Novo",theme:"Lanternas celestes na virada para 2027",stops:[
-  {id:"rota",t:"Manhã",tn:"a confirmar",svg:"route",name:"Bangkok → Chiang Mai",th:"กรุงเทพฯ → เชียงใหม่",what:"Check-out em Bangkok e viagem para o norte da Tailândia. Chegar a Chiang Mai até o início da tarde para o check-in no hotel.",
-   facts:[["De","Bangkok"],["Para","Chiang Mai, aeroporto CNX"],["Distância","≈ 700 km por estrada"],["De avião","Voo de ≈ 1h15"],["Chegar até","14:00, horário do check-in"]],
-   tip:"Meio de transporte e horários ainda a confirmar. Assim que o voo estiver comprado, eles entram aqui.",map:"Chiang Mai International Airport"},
+  {id:"saidabkk",t:"08:45",k:"simple",name:"Check-out do Novotel e ida ao aeroporto Don Mueang",txt:"Atenção: o voo sai do Don Mueang (DMK), não do Suvarnabhumi onde chegamos. Chegar por volta das 9h30."},
+  {id:"rota",t:"11:30",tn:"FD 3447",svg:"route",name:"Voo Bangkok → Chiang Mai",th:"กรุงเทพฯ → เชียงใหม่",what:"Voo direto da Thai AirAsia, classe econômica. Pouso em Chiang Mai às 12:40, com tempo de sobra para o check-in no hotel às 14h.",
+   facts:[["Voo","Thai AirAsia FD 3447"],["Partida","11:30 · Don Mueang (DMK)"],["Chegada","12:40 · Chiang Mai (CNX)"],["Duração","1h10, direto"],["Referência da reserva","CIU2WX"],["Bagagem","2 de mão (5 kg cada) + 1 despachada (15 kg)"]],
+   tip:"Mala de mão da AirAsia tem limite de 5 kg e costuma ser pesada no embarque. O excesso vai na despachada de 15 kg.",map:"Don Mueang International Airport",links:[["Baixar voucher (PDF)","docs/voo-chiang-mai.pdf"]]},
   {id:"hotelcnx",t:"14:00",tn:"check-in",ph:"hotel-cnx",name:"Lanna Oriental Hotel",th:"Chiang Mai",what:"Nossa base em Chiang Mai na virada do ano: 2 diárias, de 31 de dezembro a 2 de janeiro.",
-   facts:[["Endereço","Singharat Rd. 7, Chiang Mai 50200"],["Check-in","Qui, 31 dez 2026 · 14:00"],["Check-out","Sáb, 2 jan 2027 · 12:00"],["Reserva","2 adultos · 1 quarto · 2 diárias"],["Itinerário Hotels.com","72081032660989"],["Valor","R$ 1.619,90, pago em 9 nov"]],
-   tip:"Depois do check-in, descansar e se arrumar: às 17h começa o encontro do Ano Novo no aeroporto de Chiang Mai, a cerca de 15 minutos de carro.",map:"Lanna Oriental Hotel Singharat Road Chiang Mai"},
+   facts:[["Endereço","Singharat Rd. 7, T. Sriphum, A. Muang, Chiang Mai 50200"],["Check-in","Qui, 31 dez · a partir das 14h, sem horário limite"],["Check-out","Sáb, 2 jan 2027 · meio-dia"],["Quarto","Lanna Superior · 2 camas de solteiro · não fumante"],["Café da manhã","Incluído"],["Reservado para","Ricardo Impellizieri · 2 adultos"],["Itinerário Hoteis.com","72081032660989"],["Valor","R$ 1.619,90 pago (inclui seguro viagem de R$ 171,24)"],["Cancelamento grátis","Até 17 dez 2026, 14h no horário de Chiang Mai"]],
+   tip:"Depois de 17 de dezembro às 14h (hora local, 4h da manhã em SP), cancelar ou alterar custa 100% do valor. Depois do check-in, descansar e se arrumar: às 17h começa o encontro do Ano Novo no aeroporto, a cerca de 15 minutos de carro.",map:"Lanna Oriental Hotel Singharat Road Chiang Mai",links:[["Baixar voucher (PDF)","docs/hospedagem-chiang-mai.pdf"]]},
   {id:"anonovo",t:"17:00",tn:"até 0h25",ph:"lanternas",name:"Réveillon CAD 2027 · Lanternas celestes",th:"ปีใหม่ 2027",what:"Contagem regressiva oficial de Ano Novo de Chiang Mai, com soltura de lanternas dos desejos, apresentações da cultura Lanna e grande show de fogos de artifício.",
    facts:[["Ponto de encontro","Aeroporto Central de Chiang Mai, em frente ao estacionamento do Go Wholesale"],["Chegada","Entre 17h e 18h"],["Ingressos","2 adultos · (2027) Bilhete padrão"],["Reserva","GYG996QG9ZL3"],["Operadora","Hualiying Travel"],["Fogos","0h–0h25"]],
    table:{title:"Programação",rows:[["Encontro e partida","17h–18h"],["Credenciamento, Vila CAD e Mercado Antigo de Lanna","18h"],["Área de jantar e jogos","19h"],["Área do Pagode: música e shows","21h"],["O Espírito de Lanna: Fé Sem Limites","22h30"],["Orquestra Lanna","23h"],["Soltura da lanterna dos desejos","23h45"],["Grande espetáculo de fogos","0h–0h25"]]},
@@ -372,10 +402,11 @@ const tick=()=>{const ms=DEP-Date.now();if(ms>0){const d=Math.ceil(ms/864e5);$("
 tick();const timer=setInterval(tick,30000);
 
 /* flights */
-$("flights").innerHTML=FLIGHTS.map((f,i)=>`<article class="pass"><div class="main"><span class="tag">Trecho ${i+1} · Qatar Airways</span>
+const pass=(list)=>{let n=0;return list.map(f=>typeof f==="string"?`<div class="lay"><b>${esc(f.split(" de ")[0])}</b> ${esc(f.slice(f.indexOf(" ")+1))}</div>`:`<article class="pass"><div class="main"><span class="tag">Trecho ${++n} · ${esc(f.air)}</span>
 <div class="route"><div><div class="iata">${f.from}</div><small>${esc(f.fromN)}</small></div><div class="path"><i>✈</i></div><div style="text-align:right"><div class="iata">${f.to}</div><small>${esc(f.toN)}</small></div></div>
 <div class="times"><div><span>Partida</span><b>${f.dep}</b><span>${f.depD}</span></div><div><span>Chegada</span><b>${f.arr}</b><span>${f.arrD}</span></div><div><span>Duração</span><b>${f.dur}</b></div></div></div>
-<div class="stub"><span>Voo</span><b>${f.no}</b><span>${i?"Doha → Bangkok":"SP → Doha"}</span><span style="font-size:13px;opacity:.85">Reserva QPVOUT</span></div></article>`+(i===0?`<div class="lay"><b>3h35</b> de conexão em Doha, com troca de avião.</div>`:"")).join("");
+<div class="stub"><span>Voo</span><b>${esc(f.no)}</b><span style="font-size:13px;opacity:.85">Check-in ${f.ck}</span></div></article>`).join("")};
+$("flights").innerHTML=pass(IDA);$("flights-back").innerHTML=pass(VOLTA);$("flights-int").innerHTML=pass(INT);
 
 /* copiar reserva */
 document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",async()=>{const t=$(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(t);b.textContent="Copiado"}catch(e){b.textContent="Selecione"}setTimeout(()=>b.textContent="Copiar",1800)}));
@@ -404,17 +435,18 @@ renderDays();renderDay();
 
 /* status */
 const RES=[
- {d:"26",m:"dez",name:"Voos de ida Qatar · GRU → DOH → BKK",info:"QR 5262 + QR 828 · código QPVOUT · nº 589924364800",st:"ok"},
- {d:"27",m:"dez",name:"Hotel em Bangkok",info:"27 a 31 de dezembro · dados da reserva ainda não enviados",st:"def"},
+ {d:"26",m:"dez",name:"Voos de ida · GRU → DOH → BKK",info:"5262 + QR 828 · Decolar 589924364800 · check-in QPVOUT / B8EU6Y",st:"ok",pdf:"docs/voo-tailandia.pdf"},
+ {d:"27",m:"dez",name:"Novotel Bangkok Bangna",info:"27 a 31 dez · 4 noites · Hoteis.com 72081555904942 · não reembolsável",st:"ok",pdf:"docs/hospedagem-bangkok.pdf"},
  {d:"28",m:"dez",name:"Excursão mercado flutuante + mercado do trem",info:"Transporte de ida e volta e passeio de barco",st:"to"},
  {d:"28",m:"dez",name:"Jantar no Mazu",info:"Reserva online pelo Chope",st:"to"},
  {d:"29",m:"dez",name:"Ancient City",info:"Ingresso ≈ 800 THB, compra na bilheteria",st:"to"},
  {d:"29",m:"dez",name:"Rajadamnern Stadium",info:"Confirmar visitação ou luta na data",st:"def"},
- {d:"31",m:"dez",name:"Bangkok → Chiang Mai",info:"Meio de transporte e horário a definir",st:"def"},
- {d:"31",m:"dez",name:"Lanna Oriental Hotel · Chiang Mai",info:"31 dez a 2 jan · Hotels.com 72081032660989 · R$ 1.619,90 pago",st:"ok"},
+ {d:"31",m:"dez",name:"Voo Bangkok → Chiang Mai",info:"Thai AirAsia FD 3447 · DMK 11:30 → CNX 12:40 · reserva CIU2WX",st:"ok",pdf:"docs/voo-chiang-mai.pdf"},
+ {d:"31",m:"dez",name:"Lanna Oriental Hotel · Chiang Mai",info:"31 dez a 2 jan · café incluído · Hoteis.com 72081032660989 · cancelamento grátis até 17 dez",st:"ok",pdf:"docs/hospedagem-chiang-mai.pdf"},
  {d:"31",m:"dez",name:"Réveillon CAD 2027 · Lanternas celestes",info:"2 ingressos · reserva GYG996QG9ZL3 · Hualiying Travel",st:"ok"},
- {d:"2",m:"jan",name:"Hospedagem e programação após 2 de janeiro",info:"A definir",st:"def"},
- {d:"?",m:"",name:"Voo de volta ao Brasil",info:"Dados ainda não enviados",st:"def"}
+ 
+ {d:"14",m:"jan",name:"Voos de volta · BKK → KUL → DOH → GRU",info:"MH 781 + MH 164 + 5261 · chegada em SP sex, 15 jan, 16:55",st:"ok",pdf:"docs/voo-tailandia.pdf"},
+ {d:"3",m:"jan",name:"Roteiro de 3 a 14 de janeiro",info:"Hospedagens e passeios a definir",st:"def"}
 ];
 const ST={ok:["Reservado","s-ok"],to:["A reservar","s-to"],def:["A definir","s-def"]};
 const renderStatus=()=>{
@@ -424,12 +456,14 @@ const renderStatus=()=>{
  const pct=Math.round(c.ok/RES.length*100);
  let bar=document.getElementById("st-bar");if(!bar){bar=document.createElement("div");bar.className="bar";bar.id="st-bar";bar.innerHTML="<i></i>";$("st-sum").after(bar)}
  bar.firstChild.style.width=pct+"%";bar.title=pct+"% reservado";
- $("st-res").innerHTML=RES.map(r=>`<div class="ri"><div class="dt"><b>${esc(r.d)}</b>${esc(r.m)}</div><div><h4>${esc(r.name)}</h4><p>${esc(r.info)}</p></div><span class="pill ${ST[r.st][1]}">${ST[r.st][0]}</span></div>`).join("");
+ $("st-res").innerHTML=RES.map(r=>`<div class="ri"><div class="dt"><b>${esc(r.d)}</b>${esc(r.m)}</div><div><h4>${esc(r.name)}</h4><p>${esc(r.info)}</p>${r.pdf?`<a class="mini" href="${r.pdf}" target="_blank" rel="noopener">Baixar voucher (PDF)</a>`:""}</div><span class="pill ${ST[r.st][1]}">${ST[r.st][0]}</span></div>`).join("");
  $("st-days").innerHTML=DAYS.map(d=>{const n=d.stops.length,k=d.stops.filter(x=>checks[d.id+x.id]).length;
   return`<a class="sd" href="#roteiro" data-go="${d.id}"><div class="h"><b>${d.wd}, ${d.d} ${d.m||"dez"} · ${esc(d.title)}</b>${n?`<span>${k}/${n} feitos</span>`:""}</div>${n?`<ul>${d.stops.map(x=>`<li class="${checks[d.id+x.id]?"ok":""}"><em>${esc(x.t)}</em><span>${esc(x.name)}</span></li>`).join("")}</ul>`:`<div class="empty">Roteiro ainda não definido</div>`}</a>`}).join("");
 };
 $("st-days").addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;cur=a.dataset.go;store.set("tl-day",cur);renderDays();renderDay()},true);
 renderStatus();
+/* esconde links de PDF que não existem neste servidor */
+["docs/voo-tailandia.pdf","docs/voo-chiang-mai.pdf","docs/hospedagem-chiang-mai.pdf","docs/hospedagem-bangkok.pdf"].forEach(p=>{fetch(p,{method:"HEAD"}).then(r=>{if(!r.ok)throw 0}).catch(()=>{const st=document.createElement("style");st.textContent=`a[href="${p}"]{display:none!important}`;document.head.appendChild(st)})});
 /* conversor */
 const conv=()=>{const v=parseFloat($("thb").value)||0,r=parseFloat($("rate").value)||0;$("brl").textContent=(v*r).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});store.set("tl-rate",$("rate").value)};
 $("rate").value=store.get("tl-rate","0.165");$("thb").addEventListener("input",conv);$("rate").addEventListener("input",conv);conv();
