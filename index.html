@@ -354,7 +354,10 @@ $("rate").value=store.get("tl-rate","0.165");$("thb").addEventListener("input",c
 /* rotas */
 const views=["inicio","voos","roteiro","info"];
 const route=()=>{let v=location.hash.slice(1);if(!views.includes(v))v="inicio";views.forEach(x=>$("v-"+x).classList.toggle("on",x===v));document.querySelectorAll("nav.tabs a").forEach(a=>a.dataset.v===v?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"))};
-window.addEventListener("hashchange",()=>{route();const v=document.querySelector("section.view.on");if(v&&location.hash.slice(1)!=="inicio"&&location.hash)v.scrollIntoView({block:"start"});else window.scrollTo({top:0})});route();
+try{history.scrollRestoration="manual"}catch(e){}
+const toTop=()=>{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0};
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();const h=a.getAttribute("href");if(location.hash!==h)location.hash=h;else{route();toTop()}});
+window.addEventListener("hashchange",()=>{route();toTop();requestAnimationFrame(toTop)});route();
 }
 </script>
 </body>
