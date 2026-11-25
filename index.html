@@ -469,6 +469,8 @@ const RES=[
  {d:"5",m:"jan",name:"Roteiro de 5 a 14 de janeiro",info:"Hospedagens e passeios a definir",st:"def"}
 ];
 const ST={ok:["Reservado","s-ok"],to:["A reservar","s-to"],def:["A definir","s-def"]};
+const rk=r=>(r.m==="jan"?100:0)+(+r.d||0);
+RES.sort((a,b)=>rk(a)-rk(b));
 const renderStatus=()=>{
  const c={ok:0,to:0,def:0};RES.forEach(r=>c[r.st]++);
  $("st-sum").innerHTML=Object.keys(ST).map(k=>`<div class="${ST[k][1]}"><b>${c[k]}</b><span>${ST[k][0]}</span></div>`).join("")+"";
