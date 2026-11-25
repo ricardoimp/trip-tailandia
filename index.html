@@ -462,8 +462,6 @@ const renderStatus=()=>{
 };
 $("st-days").addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;cur=a.dataset.go;store.set("tl-day",cur);renderDays();renderDay()},true);
 renderStatus();
-/* na Vercel os PDFs (com dados pessoais) não são publicados: esconde só lá */
-if(/vercel\.app$/.test(location.hostname)){const st=document.createElement("style");st.textContent='a[href^="docs/"]{display:none!important}';document.head.appendChild(st)}
 /* conversor */
 const conv=()=>{const v=parseFloat($("thb").value)||0,r=parseFloat($("rate").value)||0;$("brl").textContent=(v*r).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});store.set("tl-rate",$("rate").value)};
 $("rate").value=store.get("tl-rate","0.165");$("thb").addEventListener("input",conv);$("rate").addEventListener("input",conv);conv();
